@@ -28,7 +28,7 @@ $.ajax({
     for (var k = 0; k < response.data.length; k++) {
         location.lat[k].push(response.data[k].latitude);
         location.lng[k].push(response.data[k].longitude);
-        location.brewID[k].push(response.data[k].longitude);
+        location.brewID[k].push(response.data[k].breweryId);
     }
 
 });
