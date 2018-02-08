@@ -1,0 +1,114 @@
+
+#logo1{
+    background-color: green;
+    color: white;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+body{
+    background: url("assets/css/images/background.jpg");      
+}
+
+.container{
+    margin: 5px;
+    text-align: center;
+    background: brown;
+    font-family: 'Archivo Black', sans-serif;
+    margin: 5px;   
+    border-radius: 20px;
+}
+
+/* #beerChoice{
+    text-align: center;
+} */
+
+.big {
+    font-size: 1.8em;
+  }
+  
+  .nl-lbl {
+    display: inline-block;
+    color: rgb(19, 18, 18);
+  }
+  
+  .nl-form input,
+  .nl-form select {
+    line-height: inherit;
+    border: none;
+      background: transparent;
+      font-size: inherit;
+      color: inherit;
+      font-weight: bold;
+      line-height: inherit;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+  }
+  
+  .nl-form input:focus,
+  .nl-form select:focus {
+    outline: none;
+  }
+  
+  .nl-form select:hover {
+    color: black;
+  }
+  
+  .nl-submit {
+    background-color: #1abc9c;
+    color: #fff;
+    font-weight: bold;
+    margin: 10px 10px 10px 0px;
+    padding: 10px;
+    border: none;
+  }
+  
+  .nl-submit:hover {
+    background-color: #14967c;
+  }
+  
+  /* Custom dropdown */
+  .nl-select {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 10px 10px 10px;
+  }
+  
+  .nl-select select {
+    background-color: transparent;
+    color: #cccccc;
+    font-size: inherit;
+    padding: .2em;
+    border: 0;
+    margin: 0;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    text-overflow: '';
+    /*Hiding the select arrow for firefox*/
+    -moz-appearance: none;
+    /*Hiding the select arrow for chrome*/
+    -webkit-appearance:none;
+    /*Hiding the select arrow default implementation*/
+    appearance: none;
+  }
+  /*Hiding the select arrow for IE10*/
+  .nl-select select::-ms-expand {
+      display: none;
+  }
+
+#footer{
+font-size: 12px;
+font-family: Arial, Helvetica, sans-serif;
+background-color: black;
+color: white;
+padding-top: 5px;
+text-align: center;
+clear: both;
+position:fixed;bottom:0;left:0;right:0;height:30px;
+}
+
+.output{
+    text-align: center;
+}
