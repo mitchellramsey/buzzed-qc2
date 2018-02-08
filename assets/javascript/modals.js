@@ -1,4 +1,4 @@
 
-    $(window).on('load',function(){
+    $("#reviewBeer").on('click',function(){
         $('#myModal').modal('show');
     });
