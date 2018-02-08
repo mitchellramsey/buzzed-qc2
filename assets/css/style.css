@@ -26,6 +26,10 @@ body{
     font-family: 'Archivo Black', sans-serif;
     border-radius: 20px;
 }
+#brewerys-appear-here, #beers-appear-here, #map-itself, #directions{
+    margin-top: 5px;
+}
+
 
 .big {
     font-size: 1.8em;
