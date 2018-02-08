@@ -21,20 +21,9 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).done(function (response) {
-    //Breweries can be find in the response object. All brewery info is found in response.data. The brewery id is programmed below to 
-    //help retrieve all beers at a defined brewery based on its location in an array. To retrieve all beers at all breweries, we will
-    //need to use a for loop. Some helpful object locations are defined below
-    //Brewery Hours of Operation: response.data[i].hoursOfOperation
-    //Latitude: response.data[i].latitude
-    //Longitude: response.data[i].longitude
-    //Street Address: response.data[i].streetAddress
-    //City: response.data[i].locality
-    //Zip Code: response.data[i].postalCode
-    //Brewery Name: response.data[i].brewery.name
-    //Established Date: response.data[i].brewery.established
-    //Icon Image: response.data[i].brewery.image.icon
+    
     console.log(response);
-    // console.log(response.data[0].breweryId);
+    
     idBrewery = response.data[3].breweryId;
     for (var k = 0; k < response.data.length; k++) {
         location.lat[k].push(response.data[k].latitude);
