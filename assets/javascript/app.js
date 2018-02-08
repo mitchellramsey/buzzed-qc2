@@ -21,9 +21,9 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).done(function (response) {
-    
+
     console.log(response);
-    
+
     idBrewery = response.data[3].breweryId;
     for (var k = 0; k < response.data.length; k++) {
         location.lat[k].push(response.data[k].latitude);
@@ -47,6 +47,7 @@ $(document).on("click", ".clicker", function () {
 
             // glass? - ale by ID - 
             for (var j = 0; j < secondResponse.data.length; j++) {
+                if (secondResponse.data[i].)
                 if (secondResponse.data[i].available.id === 1) {
                     if (secondResponse.data[i].isOrganic === beerOrganic) {
                         if (secondResponse.data[i].abv < beerABVHigh && secondResponse.data[i].abv > beerABVLow) {
@@ -160,6 +161,7 @@ function makeBreweryDiv() {
         var breweryImage = $("<img>");
         beerImage.attr("src", response.data[i].brewery.images.squareMedium);
         beerImage.attr("alt", "brewery image");
+        beerImage.attr("data-type", breweryId);
 
         newSpan.prepend(p);
         newSpan.prepend(beerImage);
