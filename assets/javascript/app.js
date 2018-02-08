@@ -4,11 +4,6 @@
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
 var idBrewery;
 
-var breweryLocation = {
-    var: lat[],
-    var: lng[],
-    var: brewID[]
-};
 var userChoice = "";
 
 var beerStyle = "";
@@ -24,11 +19,25 @@ $.ajax({
 
     console.log(response);
 
-    idBrewery = response.data[3].breweryId;
-    for (var k = 0; k < response.data.length; k++) {
-        location.lat[k].push(response.data[k].latitude);
-        location.lng[k].push(response.data[k].longitude);
-        location.brewID[k].push(response.data[k].breweryId);
+    // makeBreweryDiv();
+    for (var i = 0; i < response.data.length; i++) {
+        var breweryId = response.data[i].brewery.id;
+        var newDiv = $("<div class='output clicker'>");
+        var newSpan = $("<span>");
+
+        var p = $("<p>").text(response.data[i].brewery.name);
+        var breweryImage = $("<img>");
+        breweryImage.attr("src", response.data[i].brewery.images.squareMedium);
+        breweryImage.attr("alt", "brewery image");
+        breweryImage.attr("data-type", breweryId);
+
+        newSpan.prepend(p);
+        newSpan.prepend(breweryImage);
+
+        // newDiv.prepend();
+        newDiv.prepend(newSpan);
+
+        $("#brewery-appear-here").prepend(newDiv);
     }
 
 });
@@ -46,21 +55,21 @@ $(document).on("click", ".clicker", function () {
             var newDiv = $("<div class='output'>");
 
             // glass? - ale by ID - 
-            for (var j = 0; j < secondResponse.data.length; j++) {
-                if (secondResponse.data[i].)
-                if (secondResponse.data[i].available.id === 1) {
-                    if (secondResponse.data[i].isOrganic === beerOrganic) {
-                        if (secondResponse.data[i].abv < beerABVHigh && secondResponse.data[i].abv > beerABVLow) {
-                            if (secondResponse.data[i].style.id === || secondResponse.data[i].style.id === ) {
+            // for (var j = 0; j < secondResponse.data.length; j++) {
+            //     if (secondResponse.data[i].)
+            //     if (secondResponse.data[i].available.id === 1) {
+            //         if (secondResponse.data[i].isOrganic === beerOrganic) {
+            //             if (secondResponse.data[i].abv < beerABVHigh && secondResponse.data[i].abv > beerABVLow) {
+            //                 if (secondResponse.data[i].style.id === || secondResponse.data[i].style.id === ) {
 
 
-                                var p = $("<p>").text(secondResponse.data[i].name);
-                                newDiv.prepend(p);
-                            }
-                        }
-                    }
-                }
-            }
+            //                     var p = $("<p>").text(secondResponse.data[i].name);
+            //                     newDiv.prepend(p);
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             $("#beers-appear-here").prepend(newDiv);
 
