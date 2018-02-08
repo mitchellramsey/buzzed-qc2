@@ -7,7 +7,7 @@
 }
 
 body{
-    background: url("assets/css/images/background.jpg");      
+    background-image: "assets/images/background.jpg";      
 }
 
 .container{
