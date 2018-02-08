@@ -19,7 +19,7 @@
 
 <body>
     <div class="row">
-        <div class="col-md-12 btn">
+        <div class="col-md-12">
             <button class=pull-left id="logo1">
                 BuzzedQC
             </button>
@@ -28,64 +28,64 @@
 
     <div class="container" id="beerChoice">
         <div class="row">
-            <div class="col-md-12">
-                <div class="page">
-                    <form id="nl-form" class="nl-form">
-                        <div class="nl-lbl big">I feel like drinking a</div>
-                        <span class="nl-select big">
-                            <select>
-                                <option value="1" selected>Ale</option>
-                                <option value="2">Lager</option>
-                                <option value="3">Hybrid</option>
-                                <option value="4">Mead or Cider</option>
-                                <option value="5">Malternative</option>
-                                <option value="6">Random</option>
-                            </select>
-                            in a
-                        </span>
+            <div class="col-md-12 page">
 
-                        <br />
-                        <div class="nl-lbl big">in a</div>
+                <form id="nl-form" class="nl-form">
+                    <div class="nl-lbl big">I feel like drinking a</div>
+                    <span class="nl-select big">
+                        <select>
+                            <option value="1" selected>Ale</option>
+                            <option value="2">Lager</option>
+                            <option value="3">Hybrid</option>
+                            <option value="4">Mead or Cider</option>
+                            <option value="5">Malternative</option>
+                            <option value="6">Random</option>
+                        </select>
+                        in a
+                    </span>
 
-                        <span class="nl-select big">
-                            <select>
-                                <option value="1" selected>Standard</option>
-                                <option value="2">Flute</option>
-                                <option value="3">Goblet</option>
-                                <option value="4">Mug</option>
-                                <option value="5">Pilsner</option>
-                            </select>
-                        </span>
+                    <br />
+                    <div class="nl-lbl big">in a</div>
 
-                        <div class="nl-lbl big">glass, that is</div>
+                    <span class="nl-select big">
+                        <select>
+                            <option value="1" selected>Standard</option>
+                            <option value="2">Flute</option>
+                            <option value="3">Goblet</option>
+                            <option value="4">Mug</option>
+                            <option value="5">Pilsner</option>
+                        </select>
+                    </span>
 
-                        <span class="nl-select big">
-                            <select>
-                                <option value="1" selected>Non-Organic</option>
-                                <option value="2">Organic</option>
-                            </select>
-                        </span>
+                    <div class="nl-lbl big">glass, that is</div>
 
-                        <div class="nl-lbl big">,</div>
-                        <br />
-                        <div class="nl-lbl big">and</div>
+                    <span class="nl-select big">
+                        <select>
+                            <option value="1" selected>Non-Organic</option>
+                            <option value="2">Organic</option>
+                        </select>
+                    </span>
 
-                        <span class="nl-select big">
-                            <select>
-                                <option value="1" selected>less than 5</option>
-                                <option value="2" selected>less than 8</option>
-                                <option value="3">more than 8</option>
-                            </select>
-                        </span>
+                    <div class="nl-lbl big">,</div>
+                    <br />
+                    <div class="nl-lbl big">and</div>
 
-                        <div class="nl-lbl big">percent alcohol by volume.</div>
+                    <span class="nl-select big">
+                        <select>
+                            <option value="1" selected>less than 5</option>
+                            <option value="2" selected>less than 8</option>
+                            <option value="3">more than 8</option>
+                        </select>
+                    </span>
 
-                        <div class="nl-submit-wrap">
-                            <button class="nl-submit big" type="submit">&rarr; Find me beers!</button>
-                        </div>
-                        <div class="nl-overlay"></div>
-                    </form>
-                </div>
+                    <div class="nl-lbl big">percent alcohol by volume.</div>
+
+                    <div class="nl-submit-wrap">
+                        <button class="nl-submit big" type="submit">&rarr; Find me beers!</button>
+                    </div>
+                    <div class="nl-overlay"></div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -110,14 +110,15 @@
     </div>
     <!-- map out put area  -->
     <div class="container">
-        <div class="mapDirections">
-            <div class="col-md-6" id="map-itself">
-                div
+        <div class="row">
+            <div class="output">
+                <div class="col-md-6" id="map-itself">
+                    div
+                </div>
+                <div class="col-md-6" id="directions">
+                    here are the directions
+                </div>
             </div>
-            <div class="col-md-6" id="directions">
-                here are the directions
-            </div>
-
         </div>
     </div>
 

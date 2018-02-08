@@ -7,9 +7,9 @@
 }
 
 body{
-    background-image: url("assets/images/background.jpg");      
+    background-image: url("assets/images/background.jpg")!important; 
+    /* background-color: black!important;      */
 }
-
 /* .container{
     margin: 5px;
     text-align: center;
@@ -120,4 +120,5 @@ position:fixed;bottom:0;left:0;right:0;height:30px;
 .output{
     text-align: center;
 }
+
 
