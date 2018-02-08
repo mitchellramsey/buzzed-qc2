@@ -7,21 +7,25 @@
 }
 
 body{
-    background-image: "assets/images/background.jpg";      
+    background-image: url("assets/images/background.jpg");      
 }
 
-.container{
+/* .container{
     margin: 5px;
     text-align: center;
     background: brown;
     font-family: 'Archivo Black', sans-serif;
-    margin: 5px;   
+    border-radius: 20px;
+} */
+
+#beerChoice, #brewerys-appear-here, #beers-appear-here, #map-itself, #directions{
+     margin-left: auto;
+     margin-right: auto;
+    text-align: center;
+    background: brown;
+    font-family: 'Archivo Black', sans-serif;
     border-radius: 20px;
 }
-
-/* #beerChoice{
-    text-align: center;
-} */
 
 .big {
     font-size: 1.8em;
@@ -112,3 +116,4 @@ position:fixed;bottom:0;left:0;right:0;height:30px;
 .output{
     text-align: center;
 }
+
