@@ -31,7 +31,6 @@
     <div class="container" id="beerChoice">
         <div class="row">
             <div class="col-md-12 page">
-
                 <form id="nl-form" class="nl-form">
                     <div class="nl-lbl big">I feel like drinking a</div>
                     <span class="nl-select big">
@@ -98,13 +97,13 @@
             <div class="output">
                 <div class="col-md-6" id="brewerys-appear-here">
                     <!-- insert brewery list here -->
-                    hi
+                    brewery list
                 </div>
             </div>
 
             <div class="output">
                 <div class="col-md-6" id="beers-appear-here">
-                    hi
+                    beers appear here
                     <!-- insert beers here-->
                 </div>
             </div>
@@ -115,7 +114,7 @@
         <div class="row">
             <div class="output">
                 <div class="col-md-6" id="map-itself">
-                    div
+                    map
                 </div>
                 <div class="col-md-6" id="directions">
                     here are the directions
@@ -146,7 +145,7 @@
                 <div class="modal-body" id="modalBodyLook">
                     <p>I rate this beer a
                         <span>
-                            <input type="text" id="user-review">
+                            <input type="number" name="quantity" min="1" max="5"id="user-review">
                         </span>
                         <span> / 5</span>
                     </p>
@@ -154,7 +153,6 @@
                             
                 </div>
                 <div class="modal-footer" id="modalFooterLook">
-                    <button type="button" class="btn btn-primary" id="submitReview">Submit Beer Review</button>
                     <button type="button" class="btn btn-primary" id="modalSubmit">Submit Beer Review</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>

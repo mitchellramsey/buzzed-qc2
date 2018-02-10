@@ -13,9 +13,13 @@
         $('#myModal').modal('show');
     });
 
+<<<<<<< HEAD
+    $("#")
+=======
     var database = firebase.database();
     var beerName = "";
     var beerRating = "";
     var beerReview = "";
 
     
+>>>>>>> 0710a7b9d35ab6d8c05c59ed47c031d7b99e80ed
