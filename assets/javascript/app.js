@@ -39,7 +39,6 @@ $.ajax({
 
         $("#brewerys-appear-here").prepend(newDiv);
     }
-
 });
 
 //beer api call
