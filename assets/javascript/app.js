@@ -20,7 +20,7 @@ $.ajax({
     console.log(response);
 
     // makeBreweryDiv();
-    for (var i = 0; i < response.data.length; i++) {
+    for (var i = 0; i < 5; i++) {
         
         var breweryId = response.data[i].brewery.id;
         var newDiv = $("<div class='output, clicker'>");
