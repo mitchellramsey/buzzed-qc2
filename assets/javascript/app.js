@@ -1,10 +1,23 @@
-
-//breweryDB API
+$(document).ready(function() {
+// breweryDB API
 
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
 var idBrewery;
 
 var distanceSort = [];
+
+function getFormValues() {
+    var formValues = {};
+        formValues.beerStyles = $("#beerStyle").val();
+        formValues.glassType = $("#glassType").val();
+        formValues.isNonorganic = $("#isNonorganic").val();
+        formValues.abvContent = $("#abvContent").val();
+        console.log(formValues);
+        return formValues;
+
+
+}
+
 
 $.ajax({
     url: queryURL,
@@ -88,8 +101,8 @@ if (navigator.geolocation) {
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
-
-
+        //Retrieve the Value for the form
+        getFormValues();
 
         var userOrigin = pos.lat + "," + pos.lng;
         $("#grabdistances").on("click", function () {
@@ -182,3 +195,4 @@ if (navigator.geolocation) {
         });
     });
 }  
+});
