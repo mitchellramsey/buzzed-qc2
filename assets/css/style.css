@@ -1,14 +1,18 @@
 
 #logo1{
-    background-color: green;
-    color: white;
+
+    color: tan;
     border-radius: 20px;
-    margin-left: 10px;
+    text-align: center;
+    border-style: groove;
+    border-color: tan;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body{
     /* background-image: url("assets/images/background.jpg");  */
-    background-color: black!important;     
+    background-color: black!important;  
 }
 /* .container{
     margin: 5px;
@@ -25,6 +29,8 @@ body{
     background: brown;
     font-family: 'Archivo Black', sans-serif;
     border-radius: 20px;
+    border-style: groove;
+    border-color: tan;
 }
 
 #brewerys-appear-here, #beers-appear-here, #map-itself, #directions{
@@ -121,4 +127,14 @@ position:fixed;bottom:0;left:0;right:0;height:30px;
     text-align: center;
 }
 
+.modal{
+  background-color: black;
+}
+.modal-content{
+  color: tan;
+  background-color: brown!important;
+}
 
+#modalSubmit{
+  background-color: tan;
+}
