@@ -18,6 +18,22 @@
     var beerRating = "";
     var beerReview = "";
 
-    $("#modalSubmit")
+    $("#modalSubmit").on("click", function() {
+
+        event.preventDefault();
+
+        beerName = $("#reviewThisBeer").text();
+        beerRating = $("#user-rating").val().trim();
+        beerReview = $("#user-review").val().trim();
+
+        beerRating.val("");
+        beerReview.val("");
+
+        database.ref().push ({
+            dbbeerName: beerName,
+            dbbeerRating: beerRating,
+            dbbeerReview: beerReview
+        });
+    });
 
     
