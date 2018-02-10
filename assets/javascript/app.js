@@ -1,12 +1,13 @@
 $(document).ready(function () {
 
     googleMapsCompareCall();
-    
+
 });
 
 function loadBeerPreferences() {
     // process form data
     processForm();
+<<<<<<< HEAD
     
     // create unfiltered brewery mapping
     breweryCall();
@@ -18,6 +19,14 @@ function loadBeerPreferences() {
      * update the dom to show beers that meet our search criteria as featured,
      * followed by all the unfiltered objs
      */
+=======
+    breweryCall();  // start creating the mapping of the breweries 
+    beerCall();     // adds to the beer objects the beers to each brewery
+    //compareFormToBeerList
+    //click event pull from the object of filtered beers first, then appends the unfiltered after
+
+
+>>>>>>> 3ac82a97205a494e5241f87358250c820e0e38e3
 }
 
 function processForm() {
@@ -47,7 +56,10 @@ function breweryCall() {
         for (var i = 0; i < response.data.length; i++) {
             var tempBeerID = response.data[i].brewery.id;
             beerMappingUnfiltered[tempBeerID] = [];
-            
+
+
+
+
             // if (response.data[i].brewery.id === breweriesSortedByDistance[i].compareObj.breweryId) {
             //     var breweryId = response.data[i].brewery.id;
             //     var newDiv = $("<div class='output, clicker'>");
@@ -81,26 +93,20 @@ function breweryCall() {
 
 function beerCall() {
     //beer api call
-    $(document).on("click", ".clicker", function () {
-        console.log(this);
-        console.log(typeof this);
-        var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + $(this).attr("data-type") + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
+    for (var breweryId in object) {
+        var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + breweryId + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
         $.ajax({
             url: queryURL2,
             method: "GET",
             cache: true
         }).done(function (secondResponse) {
             console.log(secondResponse);
-            
-                        
-            
-            
-            
-            
-            $("#beers-appear-here").prepend(newDiv);
-
+            for (var j = 0; j < secondResponse.data.length; j++) {
+                beerMappingUnfiltered[breweryId].push(secondResponse.data[j]);
+            }
         });
-    });
+    }
+
 }
 
 function googleMapsCompareCall() {
