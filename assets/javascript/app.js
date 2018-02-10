@@ -132,6 +132,7 @@ if (navigator.geolocation) {
                     var distanceSort = [];
                     for(var i = 0; i < breweryDistance.elements.length; i++) {
                         var compareObj = {};
+                        compareObj.breweryId = response.data[i].breweryId;
                         compareObj.breweryName = response.data[i].brewery.name; 
                         compareObj.timeValue = breweryDistance.elements[i].duration.value;
                         compareObj.minutesAway = breweryDistance.elements[i].duration.text;
