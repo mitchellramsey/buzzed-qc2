@@ -103,9 +103,20 @@ if (navigator.geolocation) {
                     for(var i = 0; i < breweryDistance.elements.length; i++) {
                         var compareObj = {};
                         compareObj.breweryName = response.data[i].brewery.name; 
+                        compareObj.timeValue = breweryDistance.elements[i].duration.value;
                         compareObj.minutesAway = breweryDistance.elements[i].duration.text;
                         distanceSort.push(compareObj);
                     }
+                    var compare = function(a,b) {
+                        if (a.timeValue < b.timeValue) {
+                            return -1;
+                        }else if (a.timeValue > b.timeValue) {
+                            return 1;
+                        }else {
+                            return 0;
+                        }
+                    }
+                    distanceSort.sort(compare);
                     console.log(distanceSort);
                 })
 
