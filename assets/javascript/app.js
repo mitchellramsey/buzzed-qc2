@@ -23,7 +23,7 @@ $.ajax({
     for (var i = 0; i < response.data.length; i++) {
         
         var breweryId = response.data[i].brewery.id;
-        var newDiv = $("<div class='output clicker'>");
+        var newDiv = $("<div class='output, clicker'>");
         var newSpan = $("<span>");
 
         var p = $("<p>").text(response.data[i].brewery.name);
@@ -36,7 +36,7 @@ $.ajax({
         }
 
         breweryImage.attr("alt", "brewery image");
-        breweryImage.attr("data-type", breweryId);
+        newDiv.attr("data-type", breweryId);
 
         newSpan.prepend(p);
         newSpan.prepend(breweryImage);
@@ -51,7 +51,9 @@ $.ajax({
 
 //beer api call
 $(document).on("click", ".clicker", function () {
-    var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + idBrewery + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
+    console.log(this);
+    console.log(typeof this);
+    var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + $(this).attr("data-type") + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
     $.ajax({
         url: queryURL2,
         method: "GET",
