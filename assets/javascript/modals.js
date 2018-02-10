@@ -1,32 +1,39 @@
 
-    $(window).on('load',function(){
+    var config = {
+        apiKey: "AIzaSyCmOt5ExgjOM8Rp9lBR0sX_t38_rS_nSJs",
+        authDomain: "buzzedqc.firebaseapp.com",
+        databaseURL: "https://buzzedqc.firebaseio.com",
+        projectId: "buzzedqc",
+        storageBucket: "buzzedqc.appspot.com",
+        messagingSenderId: "51574204769"
+        };
+    firebase.initializeApp(config);
+    
+    $("#reviewBeer").on('click',function(){
         $('#myModal').modal('show');
     });
 
+    var database = firebase.database();
+    var beerName = "";
+    var beerRating = "";
+    var beerReview = "";
 
-    //the below modal is in the index.html 
-    // <!-- modal -->
-    // <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-    //     <div class="modal-dialog" role="document">
-    //         <div class="modal-content">
-    //             <div class="modal-header" id="modalHeadingLook">
-    //                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    //                     <span aria-hidden="true">&times;</span>
-    //                 </button>
-    //                 <h2 class="modal-title">Beer Review</h2>
-    //             </div>
-    //             <div class="modal-body" id="modalBodyLook">
-    //                 <p>I rate this beer a
-    //                     <span>
-    //                         <input type="text" id="user-review">
-    //                     </span>
-    //                     <span> / 5</span>
-    //                     <p>
-    //             </div>
-    //             <div class="modal-footer" id="modalFooterLook">
-    //                 <button type="button" class="btn btn-primary">Submit Beer Review</button>
-    //                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    //             </div>
-    //         </div>
-    //     </div>
-    // </div>
+    $("#modalSubmit").on("click", function() {
+
+        event.preventDefault();
+
+        beerName = $("#reviewThisBeer").text();
+        beerRating = $("#user-rating").val().trim();
+        beerReview = $("#user-review").val().trim();
+
+        beerRating.val("");
+        beerReview.val("");
+
+        database.ref().push ({
+            dbbeerName: beerName,
+            dbbeerRating: beerRating,
+            dbbeerReview: beerReview
+        });
+    });
+
+    
