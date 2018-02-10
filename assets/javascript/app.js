@@ -155,7 +155,7 @@ if (navigator.geolocation) {
             method: "GET"
         }).done(function (response) {
             var uluru = { lat: response.data[0].latitude, lng: response.data[0].longitude };
-            var map = new google.maps.Map(document.getElementById('map'), {
+            var map = new google.maps.Map(document.getElementById('map-itself'), {
                 zoom: 15,
                 center: uluru
             });
