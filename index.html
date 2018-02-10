@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
     <script src="assets/javascript/modals.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnRWisQlYkpJKLrO9kPx0nK1I6J-_tSVo"></script>
     <script src="assets/javascript/app.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+    
 
     <title>BuzzedQC</title>
 
@@ -36,12 +38,12 @@
                     <div class="nl-lbl big">I feel like drinking a</div>
                     <span class="nl-select big">
                         <select>
-                            <option value="1" selected>Ale</option>
-                            <option value="2">Lager</option>
-                            <option value="3">Hybrid</option>
-                            <option value="4">Mead or Cider</option>
-                            <option value="5">Malternative</option>
-                            <option value="6">Random</option>
+                            <option value="ale" selected>Ale</option>
+                            <option value="lager">Lager</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="meadorcider">Mead or Cider</option>
+                            <option value="malternative">Malternative</option>
+                            <option value="random">Random</option>
                         </select>
                         in a
                     </span>
@@ -51,11 +53,18 @@
 
                     <span class="nl-select big">
                         <select>
-                            <option value="1" selected>Standard</option>
-                            <option value="2">Flute</option>
-                            <option value="3">Goblet</option>
-                            <option value="4">Mug</option>
-                            <option value="5">Pilsner</option>
+                            <option value="0" selected>Standard</option>
+                            <option value="1">Flute</option>
+                            <option value="2">Goblet</option>
+                            <option value="3">Mug</option>
+                            <option value="4">Pilsner</option>
+                            <option value="5">Pint</option>
+                            <option value="6">Snifter</option>
+                            <option value="7">Stange</option>
+                            <option value="8">Tulip</option>
+                            <option value="9">Weizen</option>
+                            <option value="13">Willi</option>
+                            <option value="14">Thistle</option>
                         </select>
                     </span>
 
@@ -63,8 +72,8 @@
 
                     <span class="nl-select big">
                         <select>
-                            <option value="1" selected>Non-Organic</option>
-                            <option value="2">Organic</option>
+                            <option value="Y" selected>Non-Organic</option>
+                            <option value="N">Organic</option>
                         </select>
                     </span>
 
@@ -74,16 +83,16 @@
 
                     <span class="nl-select big">
                         <select>
-                            <option value="1" selected>less than 5</option>
-                            <option value="2" selected>less than 8</option>
-                            <option value="3">more than 8</option>
+                            <option value="-5" selected>less than 5</option>
+                            <option value="5,8" selected>between 5 and 8</option>
+                            <option value="8">more than 8</option>
                         </select>
                     </span>
 
                     <div class="nl-lbl big">percent alcohol by volume.</div>
 
                     <div class="nl-submit-wrap">
-                        <button class="nl-submit big" type="submit">&rarr; Find me beers!</button>
+                        <button class="nl-submit big" type="submit" id="grabdistances">&rarr; Find me beers!</button>
                     </div>
                     <div class="nl-overlay"></div>
                 </form>
@@ -98,13 +107,13 @@
             <div class="output">
                 <div class="col-md-6" id="brewerys-appear-here">
                     <!-- insert brewery list here -->
-                    brewery list
+                    Brewery List
                 </div>
             </div>
 
             <div class="output">
                 <div class="col-md-6" id="beers-appear-here">
-                    beers appear here
+                    Beer Menu
                     <!-- insert beers here-->
                 </div>
             </div>
@@ -115,10 +124,10 @@
         <div class="row">
             <div class="output">
                 <div class="col-md-6" id="map-itself">
-                    map
+                    Map
                 </div>
                 <div class="col-md-6" id="directions">
-                    here are the directions
+                    Directions to Brewery
                 </div>
             </div>
         </div>
@@ -146,11 +155,11 @@
                 <div class="modal-body" id="modalBodyLook">
                     <p>I rate this beer a
                         <span>
-                            <input type="number" name="quantity" min="1" max="5"id="user-review">
+                            <input type="number" name="quantity" min="1" max="5"id="user-rating">
                         </span>
                         <span> / 5</span>
                     </p>
-                    <p>Drop a Comment <input type="text" id="comments" style="height: 100px; width: 500px"></p>
+                    <p>Drop a Comment <input type="text" id="user-review" style="height: 100px; width: 500px"></p>
                             
                 </div>
                 <div class="modal-footer" id="modalFooterLook">
