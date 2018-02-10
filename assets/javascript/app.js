@@ -6,8 +6,7 @@ $(document).ready(function () {
 
 function loadBeerPreferences() {
     // process form data
-    processForm();
-<<<<<<< HEAD
+    getFormValues();
     
     // create unfiltered brewery mapping
     breweryCall();
@@ -19,19 +18,19 @@ function loadBeerPreferences() {
      * update the dom to show beers that meet our search criteria as featured,
      * followed by all the unfiltered objs
      */
-=======
-    breweryCall();  // start creating the mapping of the breweries 
-    beerCall();     // adds to the beer objects the beers to each brewery
-    //compareFormToBeerList
-    //click event pull from the object of filtered beers first, then appends the unfiltered after
-
-
->>>>>>> 3ac82a97205a494e5241f87358250c820e0e38e3
 }
 
-function processForm() {
-
-}
+function getFormValues() {
+    var formValues = {};
+        formValues.beerStyles = $("#beerStyle").val();
+        formValues.glassType = $("#glassType").val();
+        formValues.isNonorganic = $("#isNonorganic").val();
+        formValues.abvContent = $("#abvContent").val();
+        console.log(formValues);
+        return formValues;
+ 
+ 
+ }
 
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
