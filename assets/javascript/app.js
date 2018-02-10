@@ -6,13 +6,18 @@ $(document).ready(function () {
 
 function loadBeerPreferences() {
     // process form data
-    processForm();  
-    breweryCall();  // start creating the mapping of the breweries 
-    beerCall();     // adds to the beer objects the beers to each brewery
-    //compareFormToBeerList
-    //click event pull from the object of filtered beers first, then appends the unfiltered after
+    processForm();
     
-    
+    // create unfiltered brewery mapping
+    breweryCall();
+    beerCall();
+
+    // create filtered brewery mapping
+
+    /* on click of brewery img, 
+     * update the dom to show beers that meet our search criteria as featured,
+     * followed by all the unfiltered objs
+     */
 }
 
 function processForm() {
