@@ -16,8 +16,14 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).done(function (response) {
-
+    
     console.log(response);
+    
+    idBrewery = response.data[3].breweryId;
+    for (var k = 0; k < response.data.length; k++) {
+        location.lat[k].push(response.data[k].latitude);
+        location.lng[k].push(response.data[k].longitude);
+        location.brewID[k].push(response.data[k].breweryId);
 
     // makeBreweryDiv();
     for (var i = 0; i < 5; i++) {
@@ -47,7 +53,7 @@ $.ajax({
         $("#brewerys-appear-here").prepend(newDiv);
     }
 
-});
+}
 
 //beer api call
 $(document).on("click", ".clicker", function () {
@@ -64,6 +70,20 @@ $(document).on("click", ".clicker", function () {
             var newDiv = $("<div class='output'>");
 
             // glass? - ale by ID - 
+            for (var j = 0; j < secondResponse.data.length; j++) {
+                if (secondResponse.data[i].available.id === 1) {
+                    if (secondResponse.data[i].isOrganic === beerOrganic) {
+                        if (secondResponse.data[i].abv < beerABVHigh && secondResponse.data[i].abv > beerABVLow) {
+                            if (secondResponse.data[i].style.id === || secondResponse.data[i].style.id === ) {
+
+
+                                var p = $("<p>").text(secondResponse.data[i].name);
+                                newDiv.prepend(p);
+                            }
+                        }
+                    }
+                }
+            }
             // for (var j = 0; j < secondResponse.data.length; j++) {
             //     if (secondResponse.data[i].)
             //     if (secondResponse.data[i].available.id === 1) {
@@ -117,6 +137,27 @@ if (navigator.geolocation) {
                     method: "GET"
                 }).done(function (secondResponse) {
                     console.log(secondResponse);
+                    var breweryDistance = secondResponse.rows[0];
+                    var distanceSort = [];
+                    for(var i = 0; i < breweryDistance.elements.length; i++) {
+                        var compareObj = {};
+                        compareObj.breweryId = response.data[i].breweryId;
+                        compareObj.breweryName = response.data[i].brewery.name; 
+                        compareObj.timeValue = breweryDistance.elements[i].duration.value;
+                        compareObj.minutesAway = breweryDistance.elements[i].duration.text;
+                        distanceSort.push(compareObj);
+                    }
+                    var compare = function(a,b) {
+                        if (a.timeValue < b.timeValue) {
+                            return -1;
+                        }else if (a.timeValue > b.timeValue) {
+                            return 1;
+                        }else {
+                            return 0;
+                        }
+                    }
+                    distanceSort.sort(compare);
+                    console.log(distanceSort);
                 })
 
             });
@@ -179,7 +220,6 @@ function makeBreweryDiv() {
         var breweryImage = $("<img>");
         beerImage.attr("src", response.data[i].brewery.images.squareMedium);
         beerImage.attr("alt", "brewery image");
-        beerImage.attr("data-type", breweryId);
 
         newSpan.prepend(p);
         newSpan.prepend(beerImage);
