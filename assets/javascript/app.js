@@ -21,13 +21,20 @@ $.ajax({
 
     // makeBreweryDiv();
     for (var i = 0; i < response.data.length; i++) {
+        
         var breweryId = response.data[i].brewery.id;
         var newDiv = $("<div class='output clicker'>");
         var newSpan = $("<span>");
 
         var p = $("<p>").text(response.data[i].brewery.name);
         var breweryImage = $("<img>");
-        breweryImage.attr("src", response.data[i].brewery.images.squareMedium);
+
+        if (response.data[i].brewery.images !== undefined) {
+            breweryImage.attr("src", response.data[i].brewery.images.squareMedium);
+        } else {
+            console.log("this index has no image");
+        }
+
         breweryImage.attr("alt", "brewery image");
         breweryImage.attr("data-type", breweryId);
 
@@ -37,7 +44,7 @@ $.ajax({
         // newDiv.prepend();
         newDiv.prepend(newSpan);
 
-        $("#brewery-appear-here").prepend(newDiv);
+        $("#brewerys-appear-here").prepend(newDiv);
     }
 
 });
