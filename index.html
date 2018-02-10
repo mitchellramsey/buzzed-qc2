@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
     <script src="assets/javascript/modals.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnRWisQlYkpJKLrO9kPx0nK1I6J-_tSVo"></script>
     <script src="assets/javascript/app.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+    
 
     <title>BuzzedQC</title>
 
@@ -83,7 +85,7 @@
                     <div class="nl-lbl big">percent alcohol by volume.</div>
 
                     <div class="nl-submit-wrap">
-                        <button class="nl-submit big" type="submit">&rarr; Find me beers!</button>
+                        <button class="nl-submit big" type="submit" id="grabdistances">&rarr; Find me beers!</button>
                     </div>
                     <div class="nl-overlay"></div>
                 </form>
@@ -146,11 +148,11 @@
                 <div class="modal-body" id="modalBodyLook">
                     <p>I rate this beer a
                         <span>
-                            <input type="number" name="quantity" min="1" max="5"id="user-review">
+                            <input type="number" name="quantity" min="1" max="5"id="user-rating">
                         </span>
                         <span> / 5</span>
                     </p>
-                    <p>Drop a Comment <input type="text" id="comments" style="height: 100px; width: 500px"></p>
+                    <p>Drop a Comment <input type="text" id="user-review" style="height: 100px; width: 500px"></p>
                             
                 </div>
                 <div class="modal-footer" id="modalFooterLook">

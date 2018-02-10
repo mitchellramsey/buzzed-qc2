@@ -13,13 +13,27 @@
         $('#myModal').modal('show');
     });
 
-<<<<<<< HEAD
-    $("#")
-=======
     var database = firebase.database();
     var beerName = "";
     var beerRating = "";
     var beerReview = "";
 
+    $("#modalSubmit").on("click", function() {
+
+        event.preventDefault();
+
+        beerName = $("#reviewThisBeer").text();
+        beerRating = $("#user-rating").val().trim();
+        beerReview = $("#user-review").val().trim();
+
+        beerRating.val("");
+        beerReview.val("");
+
+        database.ref().push ({
+            dbbeerName: beerName,
+            dbbeerRating: beerRating,
+            dbbeerReview: beerReview
+        });
+    });
+
     
->>>>>>> 0710a7b9d35ab6d8c05c59ed47c031d7b99e80ed
