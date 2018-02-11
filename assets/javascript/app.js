@@ -1,22 +1,29 @@
 $(document).ready(function () {
-
     googleMapsCompareCall();
 });
 
 function loadBeerPreferences() {
-    // process form data
-    getFormValues();
-
-    // create unfiltered brewery mapping
-    breweryCall();
-    beerCall();
-    sortBeersByUserChoice();
-    // create filtered brewery mapping
+    // set listener for form submission
+    listenForFormSubmission();
 
     /* on click of brewery img, 
      * update the dom to show beers that meet our search criteria as featured,
      * followed by all the unfiltered objs
      */
+    setBeerListener();
+}
+
+
+function listenForFormSubmission() {
+    $('#nl-form').on('submit', function(event) {
+        event.preventDefault();
+
+        // process form data
+        formValues = getFormValues();
+
+        // create style mappings spa
+        createStyleMap();
+    });
 }
 
 function createStyleMap() {
@@ -51,6 +58,23 @@ function createStyleMap() {
                 styleMappings['malternative'].push(styleId);
             }
         }
+
+        // get style filter based on from data
+        var style = '';
+        if (formValues.beerStyle === 'Random') {
+            style = getRandomStyleMapping();
+        } else {
+            style = formValues.beerStyle;
+        }
+        var styleFilter = getStyleFilter(style, 4);
+
+        breweryCall();
+        beerCall();
+        // create filtered list of beers that match user preference
+        sortBeersByUserChoice(formValues, styleFilter);
+
+        // update dom with breweries
+        setBreweryListener();
     });
 }
 
@@ -116,7 +140,7 @@ function sortBeersByUserChoice(formValues) {
 
 function getFormValues() {
     var formValues = {};
-    formValues.beerStyles = $("#beerStyle").val();
+    formValues.beerStyle = $("#beerStyle").val();
     formValues.glassType = $("#glassType").val();
     formValues.isNonorganic = $("#isNonorganic").val();
     formValues.abvContent = $("#abvContent").val();
@@ -134,6 +158,8 @@ var beerMappingUnfiltered = {
 
 }
 var breweriesSortedByDistance = [];
+
+var formData = {};
 
 var styleMappings = {};
 var styleSearchRegex = {
