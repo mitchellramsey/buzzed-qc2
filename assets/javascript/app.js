@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadBeerPreferences() {
     // process form data
     getFormValues();
-    
+
     // create unfiltered brewery mapping
     breweryCall();
     beerCall();
@@ -20,17 +20,44 @@ function loadBeerPreferences() {
      */
 }
 
+function sortBeersByUserChoice(formValues) {
+    for (var breweryId in object) {
+        for (var k = 0; k < beerMappingUnfiltered[breweryId[k]]; k++) {
+            var currentBeer = beerMappingUnfiltered[breweryId][k];          //Shortens the chaining required
+            if (currentBeer.isOrganic === formValues.isNonorganic) {         //checks if the beer is organic or not
+                if (currentBeer.glass !== undefined) {
+                    if (formValues.glassType = currentBeer.glass.name) {
+                        if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
+                            if (currentBeer.abv <= 5.0) {
+
+                            }
+                        } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
+                            if (currentBeer.abv >= 8.0) {
+
+                            }
+                        } else {
+                            if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0){    //if the beer is greater then 5% and less than 8%
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 function getFormValues() {
     var formValues = {};
-        formValues.beerStyles = $("#beerStyle").val();
-        formValues.glassType = $("#glassType").val();
-        formValues.isNonorganic = $("#isNonorganic").val();
-        formValues.abvContent = $("#abvContent").val();
-        console.log(formValues);
-        return formValues;
- 
- 
- }
+    formValues.beerStyles = $("#beerStyle").val();
+    formValues.glassType = $("#glassType").val();
+    formValues.isNonorganic = $("#isNonorganic").val();
+    formValues.abvContent = $("#abvContent").val();
+    console.log(formValues);
+    return formValues;
+}
 
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
@@ -55,6 +82,7 @@ function breweryCall() {
         for (var i = 0; i < response.data.length; i++) {
             var tempBeerID = response.data[i].brewery.id;
             beerMappingUnfiltered[tempBeerID] = [];
+<<<<<<< HEAD
 
 
 
@@ -83,6 +111,8 @@ function breweryCall() {
 
             //     $("#brewerys-appear-here").prepend(newDiv);
             // }
+=======
+>>>>>>> 45b30db2ee26fe371ffabf62770f5af4ad9f0ac9
         }
         console.log(beerMapping)
 
@@ -156,8 +186,8 @@ function googleMapsCompareCall() {
                             return 0;
                         }
                     }
-                    distanceSort.sort(compare);
-                    console.log(distanceSort);
+                    breweriesSortedByDistance.sort(compare);
+                    console.log(breweriesSortedByDistance);
                 })
 
                 // now that we have all the breweries sorted by distance; update dom
@@ -210,4 +240,10 @@ function googleMapsMapCall() {
             });
         });
     }
+}
+
+function setBeerListener () {
+    $(document).on("click",".clicker" function() {
+        
+    })
 }
