@@ -51,10 +51,6 @@ function createStyleMap() {
                 styleMappings['malternative'].push(styleId);
             }
         }
-
-        var style = getRandomStyleMapping();
-        var styleRanges = getStyleFilter(style, 4);
-        console.log(styleRanges);
     });
 }
 
