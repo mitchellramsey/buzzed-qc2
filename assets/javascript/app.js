@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     googleMapsCompareCall();
-
 });
 
 function loadBeerPreferences() {
@@ -20,6 +19,70 @@ function loadBeerPreferences() {
      */
 }
 
+function createStyleMap() {
+    styleMappings = {
+        ale: [],
+        lager: [],
+        hybrid: [],
+        meadorcider: [],
+        malternative: []
+    };
+
+    var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/styles?&key=5af286e1c4f9a3ef861a52f7771d63d8";
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        cache: true
+    }).done(function (response) {
+        var data = response.data;
+        for (var j = 0; j < data.length; j++) {
+            var currentStyle = data[j];
+            var categoryName = currentStyle.category.name;
+            var styleId = currentStyle.id;
+            if (categoryName.match(styleSearchRegex.ale)) {
+                styleMappings['ale'].push(styleId);
+            } else if (categoryName.match(styleSearchRegex.lager)) {
+                styleMappings['lager'].push(styleId);
+            } else if (categoryName.match(styleSearchRegex.hybrid)) {
+                styleMappings['hybrid'].push(styleId);
+            } else if (categoryName.match(styleSearchRegex.meadorcider)) {
+                styleMappings['meadorcider'].push(styleId);
+            } else if (categoryName.match(styleSearchRegex.malternative)) {
+                styleMappings['malternative'].push(styleId);
+            }
+        }
+
+        var style = getRandomStyleMapping();
+        var styleRanges = getStyleFilter(style, 4);
+        console.log(styleRanges);
+    });
+}
+
+function getRandomStyleMapping() {
+    var styleCount = Object.keys(styleSearchRegex).length;
+    var randomStyleIndex = Math.floor(Math.random() * styleCount);
+    return Object.keys(styleSearchRegex)[randomStyleIndex];
+}
+
+function getStyleFilter(style, rangeCount) {
+    var styleRange = styleMappings[style];
+    var smallerRange = [];
+
+    if (rangeCount > styleRange.length) {
+    	rangeCount = styleRange.length;
+    }
+
+    if (rangeCount < styleRange.length) {
+        for (var i = 0; i < rangeCount; i++) {
+            var styleIndex = Math.floor(Math.random() * styleRange.length);
+            smallerRange.push(styleRange[styleIndex]);
+        }
+    } else {
+        smallerRange = styleRange;
+    }
+    return smallerRange;
+}
+
 function sortBeersByUserChoice(formValues) {
     for (var breweryId in object) {
         for (var k = 0; k < beerMappingUnfiltered[breweryId[k]]; k++) {
@@ -29,15 +92,21 @@ function sortBeersByUserChoice(formValues) {
                     if (formValues.glassType = currentBeer.glass.name) {
                         if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
                             if (currentBeer.abv <= 5.0) {
-                                beerMappingFiltered.push(currentBeer);
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
                             }
                         } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
                             if (currentBeer.abv >= 8.0) {
-                                beerMappingFiltered.push(currentBeer);
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
                             }
                         } else {
                             if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0){    //if the beer is greater then 5% and less than 8%
-                                beerMappingFiltered.push(currentBeer);
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
                             }
 
                         }
@@ -55,13 +124,13 @@ function getFormValues() {
     formValues.glassType = $("#glassType").val();
     formValues.isNonorganic = $("#isNonorganic").val();
     formValues.abvContent = $("#abvContent").val();
-    console.log(formValues);
     return formValues;
-}
+ }
 
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
 var idBrewery;
+var styleFilter = getStyleFilter(formValues.beerStyles, 4);
 var beerMappingFiltered = {
 
 };
@@ -69,6 +138,15 @@ var beerMappingUnfiltered = {
 
 }
 var breweriesSortedByDistance = [];
+
+var styleMappings = {};
+var styleSearchRegex = {
+    ale: /ale/i,
+    lager: /lager/i,
+    hybrid: /hybrid/i,
+    meadorcider: /cider/i,
+    malternative: /malternative/i
+};
 
 function breweryCall() {
     $.ajax({
