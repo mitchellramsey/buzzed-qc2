@@ -1,4 +1,3 @@
-
     var config = {
         apiKey: "AIzaSyCmOt5ExgjOM8Rp9lBR0sX_t38_rS_nSJs",
         authDomain: "buzzedqc.firebaseapp.com",

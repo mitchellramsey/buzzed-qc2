@@ -155,8 +155,8 @@ function googleMapsCompareCall() {
                             return 0;
                         }
                     }
-                    distanceSort.sort(compare);
-                    console.log(distanceSort);
+                    breweriesSortedByDistance.sort(compare);
+                    console.log(breweriesSortedByDistance);
                 })
 
                 // now that we have all the breweries sorted by distance; update dom
@@ -211,28 +211,8 @@ function googleMapsMapCall() {
     }
 }
 
-// if (response.data[i].brewery.id === breweriesSortedByDistance[i].compareObj.breweryId) {
-            //     var breweryId = response.data[i].brewery.id;
-                // var newDiv = $("<div class='output, clicker'>");
-                // var newSpan = $("<span>");
-
-                // var p = $("<p>").text(response.data[i].brewery.name);
-                // var breweryImage = $("<img>");
-
-                // if (response.data[i].brewery.images !== undefined) {
-                //     breweryImage.attr("src", response.data[i].brewery.images.squareMedium);
-                // } else {
-                //     console.log("this index has no image");
-                // }
-
-                // breweryImage.attr("alt", "brewery image");
-                // newDiv.attr("data-type", breweryId);
-
-                // newSpan.prepend(p);
-                // newSpan.prepend(breweryImage);
-
-                // // newDiv.prepend();
-                // newDiv.prepend(newSpan);
-
-                // $("#brewerys-appear-here").prepend(newDiv);
-            // }
+function setBeerListener () {
+    $(document).on("click",".clicker" function() {
+        
+    })
+}
