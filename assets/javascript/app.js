@@ -104,35 +104,56 @@ function getStyleFilter(style, rangeCount) {
 }
 
 function sortBeersByUserChoice(formValues) {
+    var styleFilter = getStyleFilter(formValues.beerStyle, 5);
+    
+    // iterate through all brewery id's in the filtered list
     for (var breweryId in beerMappingUnfiltered) {
-        for (var k = 0; k < beerMappingUnfiltered[breweryId[k]]; k++) {
-            var currentBeer = beerMappingUnfiltered[breweryId][k];          //Shortens the chaining required
-            if (currentBeer.isOrganic === formValues.isNonorganic) {         //checks if the beer is organic or not
-                if (currentBeer.glass !== undefined) {
-                    if (formValues.glassType = currentBeer.glass.name) {
-                        if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
-                            if (currentBeer.abv <= 5.0) {
-                                if (styleFilter.indexOf(currentBeer)) {
-                                    beerMappingFiltered.push(currentBeer);
-                                }
-                            }
-                        } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
-                            if (currentBeer.abv >= 8.0) {
-                                if (styleFilter.indexOf(currentBeer)) {
-                                    beerMappingFiltered.push(currentBeer);
-                                }
-                            }
-                        } else {
-                            if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0) {    //if the beer is greater then 5% and less than 8%
-                                if (styleFilter.indexOf(currentBeer)) {
-                                    beerMappingFiltered.push(currentBeer);
-                                }
-                            }
+        // get list of beers for this brewery
+        var unfilteredBeerList = beerMappingUnfiltered[breweryId];
+        for (var k = 0; k < unfilteredBeerList.length; k++) {
+            var currentBeer = unfilteredBeerList[k];
 
+            // perform filtering logic
+            if (styleFilter.indexOf(currentBeer.styleId) > -1) {
+                // the beer is in the right style
+                if (currentBeer.isOrganic === formValues.isNonorganic) {
+                    // the beer organic value is set correctly
+                    if (currentBeer.glasswareId !== undefined) {
+                        
+                        // if glass type is standard, just set it to the id for a pint
+                        if (formValues.glassType === 'Standard') {
+                            formValues.glassType = 5;
+                        } 
+                        
+                        if (currentBeer.glasswareId === parseInt(formValues.glassType)) {
+                            // the beer class is correct
+                            if (formValues.abvContent === "-5") {
+                                if (currentBeer.abv <= 5.0) {
+                                    if (beerMappingFiltered[breweryId] === undefined) {
+                                        beerMappingFiltered[breweryId] = [];
+                                    }
+                                    beerMappingFiltered[breweryId].push(currentBeer);
+                                }
+                            } else if (formValues.abvContent === "8") {
+                                if (currentBeer.abv >= 8.0) {
+                                    if (beerMappingFiltered[breweryId] === undefined) {
+                                        beerMappingFiltered[breweryId] = [];
+                                    }
+                                    beerMappingFiltered[breweryId].push(currentBeer);
+                                }
+                            } else if (formValues.abvContent === "5,8") {
+                                if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0) {
+                                    if (beerMappingFiltered[breweryId] === undefined) {
+                                        beerMappingFiltered[breweryId] = [];
+                                    }
+                                    beerMappingFiltered[breweryId].push(currentBeer);
+                                }
+                            }
                         }
                     }
                 }
             }
+
         }
     }
 }
@@ -148,9 +169,6 @@ function getFormValues() {
 }
 
 //breweryDB API
-var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
-var idBrewery;
-var styleFilter = getStyleFilter(formValues.beerStyles, 4);
 var beerMappingFiltered = {
 
 };
@@ -173,6 +191,7 @@ var styleSearchRegex = {
 var breweryInfo = {};
 
 function breweryCall() {
+    var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
     $.ajax({
         url: queryURL,
         method: "GET"
