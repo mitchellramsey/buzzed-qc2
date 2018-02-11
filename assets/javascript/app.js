@@ -69,7 +69,7 @@ function getStyleFilter(style, rangeCount) {
     var smallerRange = [];
 
     if (rangeCount > styleRange.length) {
-    	rangeCount = styleRange.length;
+        rangeCount = styleRange.length;
     }
 
     if (rangeCount < styleRange.length) {
@@ -92,19 +92,19 @@ function sortBeersByUserChoice(formValues) {
                     if (formValues.glassType = currentBeer.glass.name) {
                         if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
                             if (currentBeer.abv <= 5.0) {
-                                if (styleFilter.indexOf(currentBeer)){
+                                if (styleFilter.indexOf(currentBeer)) {
                                     beerMappingFiltered.push(currentBeer);
                                 }
                             }
                         } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
                             if (currentBeer.abv >= 8.0) {
-                                if (styleFilter.indexOf(currentBeer)){
+                                if (styleFilter.indexOf(currentBeer)) {
                                     beerMappingFiltered.push(currentBeer);
                                 }
                             }
                         } else {
-                            if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0){    //if the beer is greater then 5% and less than 8%
-                                if (styleFilter.indexOf(currentBeer)){
+                            if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0) {    //if the beer is greater then 5% and less than 8%
+                                if (styleFilter.indexOf(currentBeer)) {
                                     beerMappingFiltered.push(currentBeer);
                                 }
                             }
@@ -125,7 +125,7 @@ function getFormValues() {
     formValues.isNonorganic = $("#isNonorganic").val();
     formValues.abvContent = $("#abvContent").val();
     return formValues;
- }
+}
 
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
@@ -160,10 +160,6 @@ function breweryCall() {
         // console.log(breweriesSortedByDistance);
 
         for (var i = 0; i < response.data.length; i++) {
-<<<<<<< HEAD
-            var tempBeerID = response.data[i].brewery.id;
-            beerMappingUnfiltered[tempBeerID] = [];
-=======
             var breweryId = response.data[i].brewery.id;
             beerMappingUnfiltered[breweryId] = [];
 
@@ -174,7 +170,6 @@ function breweryCall() {
                 breweryinfo[breweryId]['name'] = response.data[i].location.longitude;
                 breweryinfo[breweryId]['icon'] = response.data[i].location.longitude;
             */
->>>>>>> 5a71e432033567f334d0fe02b8b39220274fb62b
         }
         console.log(beerMapping);
     });
@@ -303,34 +298,59 @@ function googleMapsMapCall() {
     }
 }
 
-function setBeerListener () {
-    $(document).on("click",".clicker", function() {
-      $("#beers-appear-here").empty();
-      var recommendedBeers = beerMappingFiltered[breweryId];
-      var allBeers = beerMappingUnfiltered[breweryId];
-      var beerMenu = $("<div>");
-      var recommendedHeading = $("<p>").html("<strong>Recommended Beers: </strong>");  
-      var recommendedBeerList = $("<ol>");
-      for(var i=0; i<recommendedBeers.length; i++) {
-          var beerName = recommendedBeers[i].name;
-          var beerStyle = recommendedBeers[i].style.name;
-          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
-          recommendedBeerList.append(listBeer);
-      }
-      var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
-      var fullBeerList = $("<ol>");
-      for(var j=0; j<allBeers.length; j++) {
-          var beerName = allBeers[j].name;
-          var beerStyle = allBeers[j].style.name;
-          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: "+ beerStyle);
-          fullBeerList.append(listBeer);
-      }
-      beerMenu.append(recommendedHeading)
-              .append(recommendedBeerList)
-              .append(fullHeading)
-              .append(fullBeerList);
-      $("#beers-appear-here").append(beerMenu);
-      
+function setBeerListener() {
+    $(document).on("click", ".clicker", function () {
+        $("#beers-appear-here").empty();
+        var recommendedBeers = beerMappingFiltered[breweryId];
+        var allBeers = beerMappingUnfiltered[breweryId];
+        var beerMenu = $("<div>");
+        var recommendedHeading = $("<p>").html("<strong>Recommended Beers: </strong>");
+        var recommendedBeerList = $("<ol>");
+        for (var i = 0; i < recommendedBeers.length; i++) {
+            var beerName = recommendedBeers[i].name;
+            var beerStyle = recommendedBeers[i].style.name;
+            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+            recommendedBeerList.append(listBeer);
+        }
+        var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
+        var fullBeerList = $("<ol>");
+        for (var j = 0; j < allBeers.length; j++) {
+            var beerName = allBeers[j].name;
+            var beerStyle = allBeers[j].style.name;
+            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+            fullBeerList.append(listBeer);
+        }
+        beerMenu.append(recommendedHeading)
+            .append(recommendedBeerList)
+            .append(fullHeading)
+            .append(fullBeerList);
+        $("#beers-appear-here").append(beerMenu);
+
 
     });
+}
+
+function setBreweryListener() {
+
+
+    for (var k = 0; k < 5; k++) {
+        for (var breweryId in object) {
+            var currentBeer = beerMappingFiltered[breweryId];          //Shortens the chaining required
+            if (breweriesSortedByDistance[k] === beerMappingFiltered[breweryId]) {
+                var newDiv = $("<div class=clicker divider>");
+                var infoForBrewery = $("<p>").text(breweryInfo[breweryId].name);
+                var breweryImage = $("<img>")
+
+                breweryImage.attr("src=", breweryInfo[breweryId].image);
+
+                newDiv.prepend(infoForBrewery);
+                newDiv.prepend(breweryImage);
+
+                $("#brewerys-appear-here").append(newDiv);
+                
+
+
+            }
+        }
+    }
 }
