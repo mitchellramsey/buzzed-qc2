@@ -169,6 +169,12 @@ function getFormValues() {
 }
 
 //breweryDB API
+<<<<<<< HEAD
+var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
+var idBrewery;
+// var styleFilter = getStyleFilter(formValues.beerStyles, 4);
+=======
+>>>>>>> 56efd887fcf29308a3bfad7b1e5f64981b6fd2b1
 var beerMappingFiltered = {
 
 };
@@ -203,16 +209,22 @@ function breweryCall() {
         for (var i = 0; i < response.data.length; i++) {
             var breweryId = response.data[i].brewery.id;
             beerMappingUnfiltered[breweryId] = [];
+            breweryInfo[breweryId] = [];
 
-            /*
-                breweryinfo[breweryId]['longituted'] = response.data[i].location.longitude;
-                breweryinfo[breweryId]['latitued'] = response.data[i].location.longitude;
-                breweryinfo[breweryId]['image'] = response.data[i].location.longitude;
-                breweryinfo[breweryId]['name'] = response.data[i].location.longitude;
-                breweryinfo[breweryId]['icon'] = response.data[i].location.longitude;
-            */
+            
+            breweryInfo[breweryId].longitude = response.data[i].longitude;
+            breweryInfo[breweryId].latitude = response.data[i].latitude;
+            breweryInfo[breweryId].address = response.data[i].streetAddress;
+            breweryInfo[breweryId].name = response.data[i].brewery.name;
+            if(response.data[i].brewery.images){    
+                breweryInfo[breweryId].image = response.data[i].brewery.images.icon;
+            }else {
+                breweryInfo[breweryId].image = "assets/images/no-image.png";
+            }
+
+            
         }
-        console.log(beerMapping);
+        console.log(breweryInfo);
     });
 }
 
@@ -288,7 +300,8 @@ function googleMapsCompareCall() {
                 })
 
                 // now that we have all the breweries sorted by distance; update dom
-                loadBeerPreferences();
+                $("#grabdistances").on("click", loadBeerPreferences);
+
             });
         });
     }
@@ -350,7 +363,8 @@ function setBeerListener() {
         for (var i = 0; i < recommendedBeers.length; i++) {
             var beerName = recommendedBeers[i].name;
             var beerStyle = recommendedBeers[i].style.name;
-            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle)
+                            .addClass("reviewBeer");
             recommendedBeerList.append(listBeer);
         }
         var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
@@ -358,7 +372,8 @@ function setBeerListener() {
         for (var j = 0; j < allBeers.length; j++) {
             var beerName = allBeers[j].name;
             var beerStyle = allBeers[j].style.name;
-            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle)
+                           .addClass("reviewBeer");
             fullBeerList.append(listBeer);
         }
         beerMenu.append(recommendedHeading)
