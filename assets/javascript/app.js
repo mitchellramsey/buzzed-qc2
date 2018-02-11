@@ -51,10 +51,6 @@ function createStyleMap() {
                 styleMappings['malternative'].push(styleId);
             }
         }
-
-        var style = getRandomStyleMapping();
-        var styleRanges = getStyleFilter(style, 4);
-        console.log(styleRanges);
     });
 }
 
@@ -130,7 +126,7 @@ function getFormValues() {
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
 var idBrewery;
-var styleFilter = getStyleFilter(formValues.beerStyles, 4);
+// var styleFilter = getStyleFilter(formValues.beerStyles, 4);
 var beerMappingFiltered = {
 
 };
@@ -148,6 +144,8 @@ var styleSearchRegex = {
     malternative: /malternative/i
 };
 
+var breweryInfo = {};
+
 function breweryCall() {
     $.ajax({
         url: queryURL,
@@ -158,11 +156,19 @@ function breweryCall() {
         // console.log(breweriesSortedByDistance);
 
         for (var i = 0; i < response.data.length; i++) {
-            var tempBeerID = response.data[i].brewery.id;
-            beerMappingUnfiltered[tempBeerID] = [];
-        }
-        console.log(beerMapping)
+            var breweryId = response.data[i].brewery.id;
+            beerMappingUnfiltered[breweryId] = [];
 
+            
+            breweryinfo[breweryId]['longitude'] = response.data[i].longi
+            breweryinfo[breweryId]['latitude'] = response.data[i].latitude;tude;
+            breweryinfo[breweryId]['address'] = response.data[i].streetAddress;
+            breweryinfo[breweryId]['name'] = response.data[i].brewery.name;
+            breweryinfo[breweryId]['icon'] = response.data[i].brewery.images.icon;
+
+            
+        }
+        console.log(breweryinfo);
     });
 }
 
@@ -309,7 +315,8 @@ function setBeerListener () {
       for(var j=0; j<allBeers.length; j++) {
           var beerName = allBeers[j].name;
           var beerStyle = allBeers[j].style.name;
-          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: "+ beerStyle);
+          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: "+ beerStyle)
+                        .addClass("reviewBeer");
           fullBeerList.append(listBeer);
       }
       beerMenu.append(recommendedHeading)
