@@ -11,7 +11,7 @@ function loadBeerPreferences() {
     // create unfiltered brewery mapping
     breweryCall();
     beerCall();
-
+    sortBeersByUserChoice();
     // create filtered brewery mapping
 
     /* on click of brewery img, 
@@ -29,15 +29,15 @@ function sortBeersByUserChoice(formValues) {
                     if (formValues.glassType = currentBeer.glass.name) {
                         if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
                             if (currentBeer.abv <= 5.0) {
-
+                                beerMappingFiltered.push(currentBeer);
                             }
                         } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
                             if (currentBeer.abv >= 8.0) {
-
+                                beerMappingFiltered.push(currentBeer);
                             }
                         } else {
                             if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0){    //if the beer is greater then 5% and less than 8%
-
+                                beerMappingFiltered.push(currentBeer);
                             }
 
                         }
