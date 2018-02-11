@@ -6,11 +6,11 @@ $(document).ready(function () {
 function loadBeerPreferences() {
     // process form data
     getFormValues();
-    
+
     // create unfiltered brewery mapping
     breweryCall();
     beerCall();
-
+    sortBeersByUserChoice();
     // create filtered brewery mapping
 
     /* on click of brewery img, 
@@ -83,6 +83,41 @@ function getStyleFilter(style, rangeCount) {
     return smallerRange;
 }
 
+function sortBeersByUserChoice(formValues) {
+    for (var breweryId in object) {
+        for (var k = 0; k < beerMappingUnfiltered[breweryId[k]]; k++) {
+            var currentBeer = beerMappingUnfiltered[breweryId][k];          //Shortens the chaining required
+            if (currentBeer.isOrganic === formValues.isNonorganic) {         //checks if the beer is organic or not
+                if (currentBeer.glass !== undefined) {
+                    if (formValues.glassType = currentBeer.glass.name) {
+                        if (formValues.abvContent === "-5") {                         //checks if the beer is less than or equal to 5% abv
+                            if (currentBeer.abv <= 5.0) {
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
+                            }
+                        } else if (formValues.abvContent === "8") {               //checks if the beer is greater than or equal to 8%
+                            if (currentBeer.abv >= 8.0) {
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
+                            }
+                        } else {
+                            if (currentBeer.abv > 5.0 && currentBeer.abv < 8.0){    //if the beer is greater then 5% and less than 8%
+                                if (styleFilter.indexOf(currentBeer)){
+                                    beerMappingFiltered.push(currentBeer);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 function getFormValues() {
     var formValues = {};
     formValues.beerStyles = $("#beerStyle").val();
@@ -95,6 +130,7 @@ function getFormValues() {
 //breweryDB API
 var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
 var idBrewery;
+var styleFilter = getStyleFilter(formValues.beerStyles, 4);
 var beerMappingFiltered = {
 
 };
@@ -124,35 +160,6 @@ function breweryCall() {
         for (var i = 0; i < response.data.length; i++) {
             var tempBeerID = response.data[i].brewery.id;
             beerMappingUnfiltered[tempBeerID] = [];
-
-
-
-
-            // if (response.data[i].brewery.id === breweriesSortedByDistance[i].compareObj.breweryId) {
-            //     var breweryId = response.data[i].brewery.id;
-            //     var newDiv = $("<div class='output, clicker'>");
-            //     var newSpan = $("<span>");
-
-            //     var p = $("<p>").text(response.data[i].brewery.name);
-            //     var breweryImage = $("<img>");
-
-            //     if (response.data[i].brewery.images !== undefined) {
-            //         breweryImage.attr("src", response.data[i].brewery.images.squareMedium);
-            //     } else {
-            //         console.log("this index has no image");
-            //     }
-
-            //     breweryImage.attr("alt", "brewery image");
-            //     newDiv.attr("data-type", breweryId);
-
-            //     newSpan.prepend(p);
-            //     newSpan.prepend(breweryImage);
-
-            //     // newDiv.prepend();
-            //     newDiv.prepend(newSpan);
-
-            //     $("#brewerys-appear-here").prepend(newDiv);
-            // }
         }
         console.log(beerMapping)
 
@@ -226,8 +233,8 @@ function googleMapsCompareCall() {
                             return 0;
                         }
                     }
-                    distanceSort.sort(compare);
-                    console.log(distanceSort);
+                    breweriesSortedByDistance.sort(compare);
+                    console.log(breweriesSortedByDistance);
                 })
 
                 // now that we have all the breweries sorted by distance; update dom
@@ -280,4 +287,36 @@ function googleMapsMapCall() {
             });
         });
     }
+}
+
+function setBeerListener () {
+    $(document).on("click",".clicker", function() {
+      $("#beers-appear-here").empty();
+      var recommendedBeers = beerMappingFiltered[breweryId];
+      var allBeers = beerMappingUnfiltered[breweryId];
+      var beerMenu = $("<div>");
+      var recommendedHeading = $("<p>").html("<strong>Recommended Beers: </strong>");  
+      var recommendedBeerList = $("<ol>");
+      for(var i=0; i<recommendedBeers.length; i++) {
+          var beerName = recommendedBeers[i].name;
+          var beerStyle = recommendedBeers[i].style.name;
+          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+          recommendedBeerList.append(listBeer);
+      }
+      var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
+      var fullBeerList = $("<ol>");
+      for(var j=0; j<allBeers.length; j++) {
+          var beerName = allBeers[j].name;
+          var beerStyle = allBeers[j].style.name;
+          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: "+ beerStyle);
+          fullBeerList.append(listBeer);
+      }
+      beerMenu.append(recommendedHeading)
+              .append(recommendedBeerList)
+              .append(fullHeading)
+              .append(fullBeerList);
+      $("#beers-appear-here").append(beerMenu);
+      
+
+    });
 }
