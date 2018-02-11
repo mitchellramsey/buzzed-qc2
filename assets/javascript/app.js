@@ -104,7 +104,7 @@ function getStyleFilter(style, rangeCount) {
 }
 
 function sortBeersByUserChoice(formValues) {
-    for (var breweryId in object) {
+    for (var breweryId in beerMappingUnfiltered) {
         for (var k = 0; k < beerMappingUnfiltered[breweryId[k]]; k++) {
             var currentBeer = beerMappingUnfiltered[breweryId][k];          //Shortens the chaining required
             if (currentBeer.isOrganic === formValues.isNonorganic) {         //checks if the beer is organic or not
@@ -356,7 +356,7 @@ function setBreweryListener() {
 
 
     for (var k = 0; k < 5; k++) {
-        for (var breweryId in object) {
+        for (var breweryId in beerMappingFiltered) {
             var currentBeer = beerMappingFiltered[breweryId];          //Shortens the chaining required
             if (breweriesSortedByDistance[k] === beerMappingFiltered[breweryId]) {
                 var newDiv = $("<div class=clicker divider>");
@@ -370,8 +370,6 @@ function setBreweryListener() {
 
                 $("#brewerys-appear-here").append(newDiv);
                 
-
-
             }
         }
     }
