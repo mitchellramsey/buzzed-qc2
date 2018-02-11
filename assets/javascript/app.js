@@ -184,17 +184,22 @@ function breweryCall() {
         for (var i = 0; i < response.data.length; i++) {
             var breweryId = response.data[i].brewery.id;
             beerMappingUnfiltered[breweryId] = [];
+            breweryInfo[breweryId] = [];
 
             
-            breweryInfo[breweryId]['longitude'] = response.data[i].longitude;
-            breweryInfo[breweryId]['latitude'] = response.data[i].latitude;
-            breweryInfo[breweryId]['address'] = response.data[i].streetAddress;
-            breweryInfo[breweryId]['name'] = response.data[i].brewery.name;
-            breweryInfo[breweryId]['icon'] = response.data[i].brewery.images.icon;
+            breweryInfo[breweryId].longitude = response.data[i].longitude;
+            breweryInfo[breweryId].latitude = response.data[i].latitude;
+            breweryInfo[breweryId].address = response.data[i].streetAddress;
+            breweryInfo[breweryId].name = response.data[i].brewery.name;
+            if(response.data[i].brewery.images){    
+                breweryInfo[breweryId].image = response.data[i].brewery.images.icon;
+            }else {
+                breweryInfo[breweryId].image = "assets/images/no-image.png";
+            }
 
             
         }
-        console.log(breweryinfo);
+        console.log(breweryInfo);
     });
 }
 
