@@ -214,7 +214,33 @@ function googleMapsMapCall() {
 }
 
 function setBeerListener () {
-    $(document).on("click",".clicker" function() {
-        
-    })
+    $(document).on("click",".clicker", function() {
+      $("#beers-appear-here").empty();
+      var recommendedBeers = beerMappingFiltered[breweryId];
+      var allBeers = beerMappingUnfiltered[breweryId];
+      var beerMenu = $("<div>");
+      var recommendedHeading = $("<p>").html("<strong>Recommended Beers: </strong>");  
+      var recommendedBeerList = $("<ol>");
+      for(var i=0; i<recommendedBeers.length; i++) {
+          var beerName = recommendedBeers[i].name;
+          var beerStyle = recommendedBeers[i].style.name;
+          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle);
+          recommendedBeerList.append(listBeer);
+      }
+      var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
+      var fullBeerList = $("<ol>");
+      for(var j=0; j<allBeers.length; j++) {
+          var beerName = allBeers[j].name;
+          var beerStyle = allBeers[j].style.name;
+          var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: "+ beerStyle);
+          fullBeerList.append(listBeer);
+      }
+      beerMenu.append(recommendedHeading)
+              .append(recommendedBeerList)
+              .append(fullHeading)
+              .append(fullBeerList);
+      $("#beers-appear-here").append(beerMenu);
+      
+
+    });
 }
