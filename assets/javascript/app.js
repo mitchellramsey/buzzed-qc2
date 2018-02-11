@@ -148,6 +148,8 @@ var styleSearchRegex = {
     malternative: /malternative/i
 };
 
+var breweryInfo = {};
+
 function breweryCall() {
     $.ajax({
         url: queryURL,
@@ -158,11 +160,18 @@ function breweryCall() {
         // console.log(breweriesSortedByDistance);
 
         for (var i = 0; i < response.data.length; i++) {
-            var tempBeerID = response.data[i].brewery.id;
-            beerMappingUnfiltered[tempBeerID] = [];
-        }
-        console.log(beerMapping)
+            var breweryId = response.data[i].brewery.id;
+            beerMappingUnfiltered[breweryId] = [];
 
+            /*
+                breweryinfo[breweryId]['longituted'] = response.data[i].location.longitude;
+                breweryinfo[breweryId]['latitued'] = response.data[i].location.longitude;
+                breweryinfo[breweryId]['image'] = response.data[i].location.longitude;
+                breweryinfo[breweryId]['name'] = response.data[i].location.longitude;
+                breweryinfo[breweryId]['icon'] = response.data[i].location.longitude;
+            */
+        }
+        console.log(beerMapping);
     });
 }
 
