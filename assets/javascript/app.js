@@ -212,26 +212,30 @@ function breweryCall() {
             }else {
                 breweryInfo[breweryId].image = "assets/images/no-image.png";
             }
+            beerCall();
         }
 
+        displaySubmitButton();
+
         // make beer call
-        beerCall();
+      
     });
 }
 
 function beerCall() {
     //beer api call
-    console.log("I made it to this point");
-    for (breweryId in beerMappingUnfiltered) {
+
+    for (brewd in beerMappingUnfiltered) {
         var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + breweryId + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
         $.ajax({
             url: queryURL2,
             method: "GET",
-            cache: true
+            cache: true,
+            breweryId: brewd
         }).done(function (secondResponse) {            
             if (secondResponse.data) {
                 for (var j = 0; j < secondResponse.data.length; j++) {
-                    beerMappingUnfiltered[breweryId].push(secondResponse.data[j]);
+                    beerMappingUnfiltered[this.breweryId].push(secondResponse.data[j]);
                 }
             }
         });
