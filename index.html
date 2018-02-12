@@ -14,7 +14,7 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnRWisQlYkpJKLrO9kPx0nK1I6J-_tSVo"></script>
     <script src="assets/javascript/app.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
-    
+
 
     <title>BuzzedQC</title>
 
@@ -107,13 +107,13 @@
             <div class="output">
                 <div class="col-md-6" id="brewerys-appear-here">
                     <!-- insert brewery list here -->
-                    <strong>Brewery List</strong>
+                    Brewery List
                 </div>
             </div>
 
             <div class="output">
                 <div class="col-md-6" id="beers-appear-here">
-                   <strong>Beer Menu</strong>
+                    Beer Menu
                     <!-- insert beers here-->
                 </div>
             </div>
@@ -124,10 +124,10 @@
         <div class="row">
             <div class="output">
                 <div class="col-md-6" id="map-itself">
-                    <strong>Map</strong>
+                    Map
                 </div>
                 <div class="col-md-6" id="directions">
-                    <strong>Directions to: </strong>
+                    Directions to:
                 </div>
             </div>
         </div>
@@ -141,7 +141,6 @@
         </p>
     </div>
 
-
     <!-- modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -150,17 +149,21 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h2 class="modal-title">Beer Review:  <span id= "reviewThisBeer"></span></h2>
+                    <h2 class="modal-title">Beer Review:
+                        <span id="reviewThisBeer"></span>
+                    </h2>
                 </div>
                 <div class="modal-body" id="modalBodyLook">
                     <p>I rate this beer a
                         <span>
-                            <input type="number" name="quantity" min="1" max="5"id="user-rating">
+                            <input type="number" name="quantity" min="1" max="5" id="user-rating">
                         </span>
                         <span> / 5</span>
                     </p>
-                    <p>Drop a Comment <input type="text" id="user-review" style="height: 100px; width: 500px"></p>
-                            
+                    <p>Drop a Comment
+                        <input type="text" id="user-review" style="height: 100px; width: 500px">
+                    </p>
+
                 </div>
                 <div class="modal-footer" id="modalFooterLook">
                     <button type="button" class="btn btn-primary" id="modalSubmit">Submit Beer Review</button>
