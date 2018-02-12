@@ -169,12 +169,6 @@ function getFormValues() {
 }
 
 //breweryDB API
-<<<<<<< HEAD
-var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
-var idBrewery;
-// var styleFilter = getStyleFilter(formValues.beerStyles, 4);
-=======
->>>>>>> 56efd887fcf29308a3bfad7b1e5f64981b6fd2b1
 var beerMappingFiltered = {
 
 };
@@ -230,7 +224,8 @@ function breweryCall() {
 
 function beerCall() {
     //beer api call
-    for (var breweryId in beerMappingUnfiltered) {
+    console.log("I made it to this point");
+    for (breweryId in beerMappingUnfiltered) {
         var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + breweryId + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
         $.ajax({
             url: queryURL2,
