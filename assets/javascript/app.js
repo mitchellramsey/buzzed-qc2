@@ -285,10 +285,10 @@ function googleMapsCompareCall() {
     }
 }
 
-function googleMapsMapCall() {
+function googleMapsMapCall(latitude, longitude) {
     //GOOGLE MAP IMAGE AND DIRECTION API
 
-    var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
+    // var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var pos = {
@@ -296,11 +296,11 @@ function googleMapsMapCall() {
                 lng: position.coords.longitude
             };
             var userOrigin = pos.lat + "," + pos.lng;
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).done(function (response) {
-                var uluru = { lat: response.data[0].latitude, lng: response.data[0].longitude };
+            // $.ajax({
+            //     url: queryURL,
+            //     method: "GET"
+            // }).done(function (response) {
+                var uluru = { lat: latitude , lng: longitude };
                 var map = new google.maps.Map(document.getElementById('map-itself'), {
                     zoom: 15,
                     center: uluru
@@ -311,7 +311,7 @@ function googleMapsMapCall() {
                 });
                 var queryURL2 = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/directions/json?origin=" +
                     userOrigin + "&destination=" +
-                    response.data[0].latitude + "," + response.data[0].longitude +
+                    latitude + "," + longitude +
                     "&key=AIzaSyAnRWisQlYkpJKLrO9kPx0nK1I6J-_tSVo";
                 $.ajax({
                     url: queryURL2,
@@ -327,40 +327,62 @@ function googleMapsMapCall() {
 
                 });
             });
-        });
+        }
     }
-}
+
 
 function setBeerListener() {
     $(document).on("click", ".clicker", function () {
         $("#beers-appear-here").empty();
-        var recommendedBeers = beerMappingFiltered[breweryId];
-        var allBeers = beerMappingUnfiltered[breweryId];
+        var recommendedBeers = beerMappingFiltered[$(this).attr("data-id")];
+        var allBeers = beerMappingUnfiltered[$(this).attr("data-id")];
+        var breweryLatitude = breweryInfo[$(this).attr("data-id")].latitude;
+        var breweryLongitude = breweryInfo[$(this).attr("data-id")].longitude;
         var beerMenu = $("<div>");
         var recommendedHeading = $("<p>").html("<strong>Recommended Beers: </strong>");
         var recommendedBeerList = $("<ol>");
-        for (var i = 0; i < recommendedBeers.length; i++) {
-            var beerName = recommendedBeers[i].name;
-            var beerStyle = recommendedBeers[i].style.name;
-            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle)
-                            .addClass("reviewBeer");
-            recommendedBeerList.append(listBeer);
-        }
+        if(recommendedBeers.length < 5){ 
+            for (var i = 0; i < recommendedBeers.length; i++) {
+                var beerName = recommendedBeers[i].name;
+                var beerStyle = recommendedBeers[i].style.name;
+                var listBeer = $("<li>").html("Beer Name: " + beerName + "<br>Beer Style: " + beerStyle)
+                                .addClass("reviewBeer");
+                recommendedBeerList.append(listBeer);
+            }
+        } else {
+            for (var i = 0; i < 5; i++) {
+                var beerName = recommendedBeers[i].name;
+                var beerStyle = recommendedBeers[i].style.name;
+                var listBeer = $("<li>").html("Beer Name: " + beerName + "<br>Beer Style: " + beerStyle)
+                                .addClass("reviewBeer");
+                recommendedBeerList.append(listBeer);
+            }
+        }    
         var fullHeading = $("<p>").html("<strong>Full Beer Menu: </strong>");
         var fullBeerList = $("<ol>");
-        for (var j = 0; j < allBeers.length; j++) {
-            var beerName = allBeers[j].name;
-            var beerStyle = allBeers[j].style.name;
-            var listBeer = $("<li>").text("Beer Name: " + beerName + " Beer Style: " + beerStyle)
-                           .addClass("reviewBeer");
-            fullBeerList.append(listBeer);
+        if(allBeers.length < 10){
+            for (var j = 0; j < allBeers.length; j++) {
+                var beerName = allBeers[j].name;
+                var beerStyle = allBeers[j].style.name;
+                var listBeer = $("<li>").html("Beer Name: " + beerName + "<br>Beer Style: " + beerStyle)
+                            .addClass("reviewBeer");
+                fullBeerList.append(listBeer);
+            }
+        } else {
+            for (var j = 0; j < 10; j++) {
+                var beerName = allBeers[j].name;
+                var beerStyle = allBeers[j].style.name;
+                var listBeer = $("<li>").html("Beer Name: " + beerName + "<br>Beer Style: " + beerStyle)
+                            .addClass("reviewBeer");
+                fullBeerList.append(listBeer);
+            }
         }
         beerMenu.append(recommendedHeading)
             .append(recommendedBeerList)
             .append(fullHeading)
             .append(fullBeerList);
         $("#beers-appear-here").append(beerMenu);
-
+        googleMapsMapCall(breweryLatitude, breweryLongitude);
 
     });
 }
@@ -395,19 +417,27 @@ function setBreweryListener() {
     }
     console.log(breweryInfo);
     console.log(closestBreweries);
-
+    var attachBreweries = $("<div>");
     for (var i = 0; i < closestBreweries.length; i++) {
         // populate to dom
-        var newDiv = $("<div class='clicker divider'>");
-        var infoForBrewery = $("<p>").text(closestBreweries);
+        var newDiv = $("<div class='clicker divider'>")
+                     .attr("data-id", closestBreweries[i].breweryId);
+        var publishedName = breweryInfo[closestBreweries[i].breweryId].name;
+        var infoForBrewery = $("<p>").text(publishedName)
+        var imageSource = breweryInfo[closestBreweries[i].breweryId].image;
+        // var minutesAway = brewe 
         var breweryImage = $("<img>")
+        var horizontalRow = $("<hr>");
+        breweryImage.attr("src", imageSource);
 
-        breweryImage.attr("src=", breweryInfo[closestBreweries.breweryId].image);
-
-        newDiv.prepend(infoForBrewery);
-        newDiv.prepend(breweryImage);
+        newDiv.append(infoForBrewery);
+        newDiv.append(breweryImage);
+        newDiv.append(horizontalRow);
+        attachBreweries.append(newDiv);
+        
+    
     }
-
+    $("#brewerys-appear-here").append(attachBreweries);
 
     
     // for (var k = 0; k < 5; k++) {
