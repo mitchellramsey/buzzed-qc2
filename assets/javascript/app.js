@@ -262,7 +262,6 @@ function googleMapsCompareCall() {
                         compareObj.timeValue = breweryDistance.elements[i].duration.value;
                         compareObj.minutesAway = breweryDistance.elements[i].duration.text;
                         breweriesSortedByDistance.push(compareObj);
-                        // console.log(breweriesSortedByDistance);
                     }
                     var compare = function (a, b) {
                         if (a.timeValue < b.timeValue) {
@@ -364,25 +363,55 @@ function setBeerListener() {
 }
 
 function setBreweryListener() {
-
-
-    for (var k = 0; k < 5; k++) {
-        for (var breweryId in beerMappingFiltered) {
-            var currentBeer = beerMappingFiltered[breweryId];          //Shortens the chaining required
-            if (breweriesSortedByDistance[k] === beerMappingFiltered[breweryId]) {
-                var newDiv = $("<div class=clicker divider>");
-                var infoForBrewery = $("<p>").text(breweryInfo[breweryId].name);
-                var breweryImage = $("<img>")
-
-                breweryImage.attr("src=", breweryInfo[breweryId].image);
-
-                newDiv.prepend(infoForBrewery);
-                newDiv.prepend(breweryImage);
-
-                $("#brewerys-appear-here").append(newDiv);
-                
+    var breweryLimit = 5;
+    if (Object.keys(beerMappingFiltered).length < 5) {
+        breweryLimit = Object.keys(beerMappingFiltered).length;
+    }
+    
+    var closestBreweries = [];
+    var breweryCount = 0;
+    while (breweryCount < breweryLimit) {
+        for (var j = 0; j < breweriesSortedByDistance.length; j++) {
+            var nextClosestBrewery = breweriesSortedByDistance[j];
+            // iterate through each filtered brewery to determine if the next closest brewery is in the filtered list
+            for (var filteredBrewId in beerMappingFiltered) {
+                // if this brewery is in the filtered list push the list of all the beers onto the five closests array
+                if (filteredBrewId === nextClosestBrewery.breweryId) {
+                    var breweryObj = {
+                        breweryId: filteredBrewId,
+                        beers: beerMappingFiltered[filteredBrewId]
+                    };
+                    closestBreweries.push(breweryObj);
+                    breweryCount++;
+                    break;
+                }
             }
         }
     }
+
+    for (var i = 0; i < closestBreweries.length; i++) {
+        // populate to dom
+    }
+
+
+    
+    // for (var k = 0; k < 5; k++) {
+    //     for (var breweryId in beerMappingFiltered) {
+    //         var currentBeer = beerMappingFiltered[breweryId];          //Shortens the chaining required
+    //         if (breweriesSortedByDistance[k] === beerMappingFiltered[breweryId]) {
+    //             var newDiv = $("<div class=clicker divider>");
+    //             var infoForBrewery = $("<p>").text(breweryInfo[breweryId].name);
+    //             var breweryImage = $("<img>")
+
+    //             breweryImage.attr("src=", breweryInfo[breweryId].image);
+
+    //             newDiv.prepend(infoForBrewery);
+    //             newDiv.prepend(breweryImage);
+
+    //             $("#brewerys-appear-here").append(newDiv);
+                
+    //         }
+    //     }
+    // }
 }
 
