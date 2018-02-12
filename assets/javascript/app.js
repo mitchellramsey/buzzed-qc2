@@ -1,18 +1,20 @@
 $(document).ready(function () {
+    // hide submit button
+    hideSubmitButton();
+
+    // define the event listener for form submit
+    listenForFormSubmission();
+
     googleMapsCompareCall();
 });
 
-function loadBeerPreferences() {
-    // set listener for form submission
-    listenForFormSubmission();
-
-    /* on click of brewery img, 
-     * update the dom to show beers that meet our search criteria as featured,
-     * followed by all the unfiltered objs
-     */
-    setBeerListener();
+function displaySubmitButton() {
+    $('#grabdistances').show();
 }
 
+function hideSubmitButton() {
+    $('#grabdistances').hide();
+}
 
 function listenForFormSubmission() {
     $('#nl-form').on('submit', function(event) {
@@ -21,7 +23,7 @@ function listenForFormSubmission() {
         // process form data
         formValues = getFormValues();
 
-        // create style mappings spa
+        // create style mappings, filter beers, and update dom
         createStyleMap();
     });
 }
@@ -68,13 +70,12 @@ function createStyleMap() {
         }
         var styleFilter = getStyleFilter(style, 4);
 
-        breweryCall();
-        beerCall();
         // create filtered list of beers that match user preference
         sortBeersByUserChoice(formValues, styleFilter);
 
         // update dom with breweries
         setBreweryListener();
+        setBeerListener();
     });
 }
 
@@ -169,12 +170,6 @@ function getFormValues() {
 }
 
 //breweryDB API
-<<<<<<< HEAD
-var queryURL = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/locations?locality=charlotte&key=5af286e1c4f9a3ef861a52f7771d63d8";
-var idBrewery;
-// var styleFilter = getStyleFilter(formValues.beerStyles, 4);
-=======
->>>>>>> 56efd887fcf29308a3bfad7b1e5f64981b6fd2b1
 var beerMappingFiltered = {
 
 };
@@ -202,10 +197,6 @@ function breweryCall() {
         url: queryURL,
         method: "GET"
     }).done(function (response) {
-
-        console.log(response);
-        // console.log(breweriesSortedByDistance);
-
         for (var i = 0; i < response.data.length; i++) {
             var breweryId = response.data[i].brewery.id;
             beerMappingUnfiltered[breweryId] = [];
@@ -221,10 +212,10 @@ function breweryCall() {
             }else {
                 breweryInfo[breweryId].image = "assets/images/no-image.png";
             }
-
-            
         }
-        console.log(breweryInfo);
+
+        // make beer call
+        beerCall();
     });
 }
 
@@ -236,14 +227,15 @@ function beerCall() {
             url: queryURL2,
             method: "GET",
             cache: true
-        }).done(function (secondResponse) {
-            console.log(secondResponse);
-            for (var j = 0; j < secondResponse.data.length; j++) {
-                beerMappingUnfiltered[breweryId].push(secondResponse.data[j]);
+        }).done(function (secondResponse) {            
+            if (secondResponse.data) {
+                for (var j = 0; j < secondResponse.data.length; j++) {
+                    beerMappingUnfiltered[breweryId].push(secondResponse.data[j]);
+                }
             }
         });
     }
-
+    displaySubmitButton();
 }
 
 function googleMapsCompareCall() {
@@ -262,7 +254,6 @@ function googleMapsCompareCall() {
                 url: queryURL,
                 method: "GET"
             }).done(function (response) {
-                console.log(response);
                 // var userOrigin = navigator.geolocation.getCurrentPosition(showPosition);
                 var queryURL2 = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" +
                     userOrigin + "&destinations=";
@@ -274,7 +265,6 @@ function googleMapsCompareCall() {
                     url: queryURL2,
                     method: "GET"
                 }).done(function (secondResponse) {
-                    console.log(secondResponse);
                     breweriesSortedByDistance = [];
                     var breweryDistance = secondResponse.rows[0];
                     for (var i = 0; i < breweryDistance.elements.length; i++) {
@@ -296,16 +286,15 @@ function googleMapsCompareCall() {
                         }
                     }
                     breweriesSortedByDistance.sort(compare);
-                    console.log(breweriesSortedByDistance);
+                    
+                    // now that we have location get all of the brewery info and metadata
+                    breweryCall();
                 })
-
-                // now that we have all the breweries sorted by distance; update dom
-                $("#grabdistances").on("click", loadBeerPreferences);
-
             });
         });
     }
 }
+
 function googleMapsMapCall() {
     //GOOGLE MAP IMAGE AND DIRECTION API
 
