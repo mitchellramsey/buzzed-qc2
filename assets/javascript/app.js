@@ -265,7 +265,6 @@ function googleMapsCompareCall() {
                         compareObj.timeValue = breweryDistance.elements[i].duration.value;
                         compareObj.minutesAway = breweryDistance.elements[i].duration.text;
                         breweriesSortedByDistance.push(compareObj);
-                        // console.log(breweriesSortedByDistance);
                     }
                     var compare = function (a, b) {
                         if (a.timeValue < b.timeValue) {
@@ -367,28 +366,67 @@ function setBeerListener() {
 }
 
 function setBreweryListener() {
+    var breweryLimit = 5;
+    if (Object.keys(beerMappingFiltered).length < 5) {
+        breweryLimit = Object.keys(beerMappingFiltered).length;
+    }
 
-    // for(var k=0;k < 5;){
-        for (var j = 0; j < breweriesSortedByDistance.length; j++){
-            // for (var id in beerMappingFiltered) {
-            //     var currentBeer = beerMappingFiltered[id];          //Shortens the chaining required
-            //     if (breweriesSortedByDistance[j].breweryId === beerMappingFiltered[id]) {
-                    
-                    var newDiv = $("<div class='clicker divider'>");
-                    var infoForBrewery = $("<p>").text(breweryInfo[breweriesSortedByDistance[j].breweryId].name);
-                    var breweryImage = $("<img>")
-                    var minutesAway = $("<p>").text(breweriesSortedByDistance[j].minutesAway);
-                    breweryImage.attr("src=", breweryInfo[breweriesSortedByDistance[j].breweryId].image);
-
-                    newDiv.prepend(infoForBrewery);
-                    newDiv.prepend(breweryImage);
-
-                    $("#brewerys-appear-here").append(newDiv);
-                    k++;
-                    
-                
-            
+    var closestBreweries = [];
+    var breweryCount = 0;
+    while (breweryCount < breweryLimit) {
+        for (var j = 0; j < breweriesSortedByDistance.length; j++) {
+            var nextClosestBrewery = breweriesSortedByDistance[j];
+            // iterate through each filtered brewery to determine if the next closest brewery is in the filtered list
+            for (var filteredBrewId in beerMappingFiltered) {
+                // if this brewery is in the filtered list push the list of all the beers onto the five closests array
+                if (filteredBrewId === nextClosestBrewery.breweryId) {
+                    var breweryObj = {
+                        breweryId: filteredBrewId,
+                        beers: beerMappingFiltered[filteredBrewId],
+                        // image: breweryInfo[breweryId].image,
+                        // name: breweryInfo[breweryId].name
+                    };
+                    closestBreweries.push(breweryObj);
+                    breweryCount++;
+                    break;
+                }
+            }
         }
+    }
+    console.log(breweryInfo);
+    console.log(closestBreweries);
+
+    for (var i = 0; i < closestBreweries.length; i++) {
+        // populate to dom
+        var newDiv = $("<div class='clicker divider'>");
+        var infoForBrewery = $("<p>").text(closestBreweries);
+        var breweryImage = $("<img>")
+
+        breweryImage.attr("src=", breweryInfo[closestBreweries.breweryId].image);
+
+        newDiv.prepend(infoForBrewery);
+        newDiv.prepend(breweryImage);
+    }
+
+
+    
+    // for (var k = 0; k < 5; k++) {
+    //     for (var breweryId in beerMappingFiltered) {
+    //         var currentBeer = beerMappingFiltered[breweryId];          //Shortens the chaining required
+    //         if (breweriesSortedByDistance[k] === beerMappingFiltered[breweryId]) {
+    //             var newDiv = $("<div class=clicker divider>");
+    //             var infoForBrewery = $("<p>").text(breweryInfo[breweryId].name);
+    //             var breweryImage = $("<img>")
+
+    //             breweryImage.attr("src=", breweryInfo[breweryId].image);
+
+    //             newDiv.prepend(infoForBrewery);
+    //             newDiv.prepend(breweryImage);
+
+    //             $("#brewerys-appear-here").append(newDiv);
+                
+    //         }
+    //     }
     // }
 }
 
