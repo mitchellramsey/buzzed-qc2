@@ -85,23 +85,8 @@ function getRandomStyleMapping() {
     return Object.keys(styleSearchRegex)[randomStyleIndex];
 }
 
-function getStyleFilter(style, rangeCount) {
-    var styleRange = styleMappings[style];
-    var smallerRange = [];
-
-    if (rangeCount > styleRange.length) {
-        rangeCount = styleRange.length;
-    }
-
-    if (rangeCount < styleRange.length) {
-        for (var i = 0; i < rangeCount; i++) {
-            var styleIndex = Math.floor(Math.random() * styleRange.length);
-            smallerRange.push(styleRange[styleIndex]);
-        }
-    } else {
-        smallerRange = styleRange;
-    }
-    return smallerRange;
+function getStyleFilter(style) {
+    return styleRange = styleMappings[style];
 }
 
 function sortBeersByUserChoice(formValues) {
@@ -117,12 +102,12 @@ function sortBeersByUserChoice(formValues) {
             // perform filtering logic
             if (styleFilter.indexOf(currentBeer.styleId) > -1) {
                 // the beer is in the right style
-                if (currentBeer.isOrganic === formValues.isNonorganic) {
+                if (currentBeer.isOrganic === formValues.isOrganic) {
                     // the beer organic value is set correctly
                     if (currentBeer.glasswareId !== undefined) {
                         
                         // if glass type is standard, just set it to the id for a pint
-                        if (formValues.glassType === 'Standard') {
+                        if (formValues.glassType === '0') {
                             formValues.glassType = 5;
                         } 
                         
@@ -164,7 +149,7 @@ function getFormValues() {
     var formValues = {};
     formValues.beerStyle = $("#beerStyle").val();
     formValues.glassType = $("#glassType").val();
-    formValues.isNonorganic = $("#isNonorganic").val();
+    formValues.isOrganic = $("#isOrganic").val();
     formValues.abvContent = $("#abvContent").val();
     return formValues;
 }
@@ -221,17 +206,20 @@ function breweryCall() {
 
 function beerCall() {
     //beer api call
-    for (var breweryId in beerMappingUnfiltered) {
-        var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + breweryId + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
+    for (var brewd in beerMappingUnfiltered) {
+        var queryURL2 = "https://cors-anywhere.herokuapp.com/http://api.brewerydb.com/v2/brewery/" + brewd + "/beers?&key=5af286e1c4f9a3ef861a52f7771d63d8";
         $.ajax({
             url: queryURL2,
             method: "GET",
+            breweryId: brewd,
             cache: true
         }).done(function (secondResponse) {            
             if (secondResponse.data) {
                 for (var j = 0; j < secondResponse.data.length; j++) {
-                    beerMappingUnfiltered[breweryId].push(secondResponse.data[j]);
+                    beerMappingUnfiltered[this.breweryId].push(secondResponse.data[j]);
                 }
+            } else {
+                delete beerMappingUnfiltered[this.breweryId];
             }
         });
     }
