@@ -10,6 +10,7 @@
     
     $(document).on('click',".reviewBeer",function(){
         $('#myModal').modal('show');
+        $("#reviewThisBeer").text($(this).beerName);
     });
 
     var database = firebase.database();
@@ -17,7 +18,7 @@
     var beerRating = "";
     var beerReview = "";
 
-    $("#modalSubmit").on("click", function() {
+    $(document).on("click","#modalSubmit", function() {
 
         event.preventDefault();
 
@@ -33,6 +34,7 @@
             dbbeerRating: beerRating,
             dbbeerReview: beerReview
         });
+        $("myModal").modal('hide');
     });
 
     
