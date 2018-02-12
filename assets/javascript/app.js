@@ -418,6 +418,8 @@ function setBreweryListener() {
     console.log(breweryInfo);
     console.log(closestBreweries);
     var attachBreweries = $("<div>");
+    $("#brewerys-appear-here").empty();
+    $("#brewerys-appear-here").html("<p>Closest Recommend Breweries</p>");
     for (var i = 0; i < closestBreweries.length; i++) {
         // populate to dom
         var newDiv = $("<div class='clicker divider'>")
