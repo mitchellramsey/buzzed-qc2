@@ -372,6 +372,10 @@ function setBreweryListener() {
     var breweryCount = 0;
     while (breweryCount < breweryLimit) {
         for (var j = 0; j < breweriesSortedByDistance.length; j++) {
+            if (breweryCount === 5) {
+                // no need to look at the next closest brewery we've hit our limit
+                break;
+            }
             var nextClosestBrewery = breweriesSortedByDistance[j];
             // iterate through each filtered brewery to determine if the next closest brewery is in the filtered list
             for (var filteredBrewId in beerMappingFiltered) {
