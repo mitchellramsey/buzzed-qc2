@@ -8,7 +8,7 @@
         };
     firebase.initializeApp(config);
     
-    $("#reviewBeer").on('click',function(){
+    $(document).on('click',".reviewBeer",function(){
         $('#myModal').modal('show');
     });
 
