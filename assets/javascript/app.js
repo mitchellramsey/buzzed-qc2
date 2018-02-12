@@ -420,24 +420,46 @@ function setBreweryListener() {
     var attachBreweries = $("<div>");
     $("#brewerys-appear-here").empty();
     $("#brewerys-appear-here").html("<p>Closest Recommend Breweries</p>");
-    for (var i = 0; i < closestBreweries.length; i++) {
-        // populate to dom
-        var newDiv = $("<div class='clicker divider'>")
-                     .attr("data-id", closestBreweries[i].breweryId);
-        var publishedName = breweryInfo[closestBreweries[i].breweryId].name;
-        var infoForBrewery = $("<p>").text(publishedName)
-        var imageSource = breweryInfo[closestBreweries[i].breweryId].image;
-        // var minutesAway = brewe 
-        var breweryImage = $("<img>")
-        var horizontalRow = $("<hr>");
-        breweryImage.attr("src", imageSource);
+    if(closestBreweries.length < 6) {
+        for (var i = 0; i < closestBreweries.length; i++) {
+            // populate to dom
+            var newDiv = $("<div class='clicker divider'>")
+                        .attr("data-id", closestBreweries[i].breweryId);
+            var publishedName = breweryInfo[closestBreweries[i].breweryId].name;
+            var infoForBrewery = $("<p>").text(publishedName)
+            var imageSource = breweryInfo[closestBreweries[i].breweryId].image;
+            // var minutesAway = brewe 
+            var breweryImage = $("<img>")
+            var horizontalRow = $("<hr>");
+            breweryImage.attr("src", imageSource);
 
-        newDiv.append(infoForBrewery);
-        newDiv.append(breweryImage);
-        newDiv.append(horizontalRow);
-        attachBreweries.append(newDiv);
+            newDiv.append(infoForBrewery);
+            newDiv.append(breweryImage);
+            newDiv.append(horizontalRow);
+            attachBreweries.append(newDiv);
+            
         
-    
+        }
+    } else {
+        for (var i = 0; i < 5; i++) {
+            // populate to dom
+            var newDiv = $("<div class='clicker divider'>")
+                        .attr("data-id", closestBreweries[i].breweryId);
+            var publishedName = breweryInfo[closestBreweries[i].breweryId].name;
+            var infoForBrewery = $("<p>").text(publishedName)
+            var imageSource = breweryInfo[closestBreweries[i].breweryId].image;
+            // var minutesAway = brewe 
+            var breweryImage = $("<img>")
+            var horizontalRow = $("<hr>");
+            breweryImage.attr("src", imageSource);
+
+            newDiv.append(infoForBrewery);
+            newDiv.append(breweryImage);
+            newDiv.append(horizontalRow);
+            attachBreweries.append(newDiv);
+            
+        
+        }
     }
     $("#brewerys-appear-here").append(attachBreweries);
 
