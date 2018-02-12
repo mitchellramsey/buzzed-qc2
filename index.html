@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+    <script src="assets/javascript/modals.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnRWisQlYkpJKLrO9kPx0nK1I6J-_tSVo"></script>
+    <script src="assets/javascript/app.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Archivo+Black" rel="stylesheet">
+
+
+    <title>BuzzedQC</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class=center id="logo1">
+                    BuzzedQC
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="beerChoice">
+        <div class="row">
+            <div class="col-md-12 page">
+                <form id="nl-form" class="nl-form">
+                    <div class="nl-lbl big">I feel like drinking a</div>
+                    <span class="nl-select big">
+                        <select id="beerStyle">
+                            <option value="ale" selected>Ale</option>
+                            <option value="lager">Lager</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="meadorcider">Mead or Cider</option>
+                            <option value="malternative">Malternative</option>
+                            <option value="random">Random</option>
+                        </select>
+                        in a
+                    </span>
+
+                    <br />
+                    <div class="nl-lbl big">in a</div>
+
+                    <span class="nl-select big">
+                        <select id="glassType">
+                            <option value="0" selected>Standard</option>
+                            <option value="1">Flute</option>
+                            <option value="2">Goblet</option>
+                            <option value="3">Mug</option>
+                            <option value="4">Pilsner</option>
+                            <option value="5">Pint</option>
+                            <option value="6">Snifter</option>
+                            <option value="7">Stange</option>
+                            <option value="8">Tulip</option>
+                            <option value="9">Weizen</option>
+                            <option value="13">Willi</option>
+                            <option value="14">Thistle</option>
+                        </select>
+                    </span>
+
+                    <div class="nl-lbl big">glass, that is</div>
+
+                    <span class="nl-select big">
+                        <select id="isOrganic">
+                            <option value="N" selected>Non-Organic</option>
+                            <option value="Y">Organic</option>
+                        </select>
+                    </span>
+
+                    <div class="nl-lbl big">,</div>
+                    <br />
+                    <div class="nl-lbl big">and</div>
+
+                    <span class="nl-select big">
+                        <select id="abvContent">
+                            <option value="-5" selected>less than 5</option>
+                            <option value="5,8" selected>between 5 and 8</option>
+                            <option value="8">more than 8</option>
+                        </select>
+                    </span>
+
+                    <div class="nl-lbl big">percent alcohol by volume.</div>
+
+                    <div class="nl-submit-wrap">
+                        <button class="nl-submit big" type="submit" id="grabdistances">&rarr; Find me beers!</button>
+                    </div>
+                    <div class="nl-overlay"></div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- output area -->
+    <div class="container">
+        <div class="row">
+            <div class="output">
+                <div class="col-md-6" id="brewerys-appear-here">
+                    <!-- insert brewery list here -->
+                    Closest Recommended Breweries
+                </div>
+            </div>
+
+            <div class="output">
+                <div class="col-md-6" id="beers-appear-here">
+                    Beer Menu
+                    <!-- insert beers here-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- map out put area  -->
+    <div class="container">
+        <div class="row">
+            <div class="output">
+                <div class="col-md-6" id="map-itself">
+                    Map
+                </div>
+                <div class="col-md-6" id="directions">
+                    Directions to:
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer -->
+    <div id="footer">
+        <p>
+            Copyright &copy; 2018 Kurtis Carpenter, Mitch Ramsey, Brian Stryloski, Garvey Jackson
+        </p>
+    </div>
+
+    <!-- modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="modalHeadingLook">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="modal-title">Beer Review:
+                        <span id="reviewThisBeer"></span>
+                    </h2>
+                </div>
+                <div class="modal-body" id="modalBodyLook">
+                    <p>I rate this beer a
+                        <span>
+                            <input type="number" name="quantity" min="1" max="5" id="user-rating">
+                        </span>
+                        <span> / 5</span>
+                    </p>
+                    <p>Drop a Comment
+                        <input type="text" id="user-review" style="height: 100px; width: 500px">
+                    </p>
+
+                </div>
+                <div class="modal-footer" id="modalFooterLook">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="modalSubmit">Submit Beer Review</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

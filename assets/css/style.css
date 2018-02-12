@@ -1,0 +1,181 @@
+
+#logo1{
+
+    color: tan;
+    border-radius: 20px;
+    text-align: center;
+    border-style: groove;
+    border-color: tan;
+    margin-left: auto;
+    margin-right: auto;
+    /* background-color: brown; */
+}
+
+body{
+    /* background-image: url("assets/images/background.jpg");  */
+    background-color: black!important;  
+    /* border-style: solid;
+    border-color: tan;
+    border-width: 5px; */
+}
+/* .container{
+    margin: 5px;
+    text-align: center;
+    background: brown; 
+    font-family: 'Archivo Black', sans-serif;
+    border-radius: 20px;
+} */
+
+#beerChoice, #brewerys-appear-here, #beers-appear-here, #map-itself, #directions{
+     margin-left: auto;
+     margin-right: auto;
+    text-align: center;
+    background: brown;
+    font-family: 'Archivo Black', sans-serif;
+    border-radius: 20px;
+    border-style: groove;
+    border-color: tan;
+    padding-top: 5px;
+}
+
+#brewerys-appear-here, #beers-appear-here, #map-itself, #directions{
+    margin-top: 5px;
+}
+
+.big {
+    font-size: 1.8em;
+    color: tan;
+  }
+  
+  .nl-lbl {
+    display: inline-block;
+    color: tan;
+  }
+  
+  .nl-form input,
+  .nl-form select {
+    line-height: inherit;
+    border: none;
+      background: transparent;
+      font-size: inherit;
+      color: inherit;
+      font-weight: bold;
+      line-height: inherit;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+  }
+  
+  .nl-form input:focus,
+  .nl-form select:focus {
+    outline: none;
+  }
+  
+  .nl-form select:hover {
+    color: gold;
+  }
+  
+  .nl-submit {
+    background-color: tan;
+    color: #fff;
+    font-weight: bold;
+    margin: 10px 10px 10px 0px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    
+  }
+  
+  .nl-submit:hover {
+    background-color: gold;
+    border-radius: 20px;
+  }
+  
+  /* Custom dropdown */
+  .nl-select {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 10px 10px 10px;
+  }
+  
+  .nl-select select {
+    background-color: transparent;
+    color: #cccccc;
+    font-size: inherit;
+    padding: .2em;
+    border: 0;
+    margin: 0;
+    border-radius: 3px;
+    text-indent: 0.01px;
+    text-overflow: '';
+    /*Hiding the select arrow for firefox*/
+    -moz-appearance: none;
+    /*Hiding the select arrow for chrome*/
+    -webkit-appearance:none;
+    /*Hiding the select arrow default implementation*/
+    appearance: none;
+  }
+  /*Hiding the select arrow for IE10*/
+  .nl-select select::-ms-expand {
+      display: none;
+  }
+
+#footer{
+font-size: 12px;
+font-family: Arial, Helvetica, sans-serif;
+background-color: black;
+color: white;
+padding-top: 5px;
+text-align: center;
+clear: both;
+position:relative;bottom:0;left:0;right:0;height:30px;
+}
+
+.output{
+    text-align: center;
+    color: tan;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal{
+  background-color: black;
+}
+.modal-content{
+  margin-top:100px;
+  color: tan;
+  background-color: brown!important; 
+  border-style: groove!important;
+  border-color: tan!important; 
+}
+
+#modalSubmit{
+  background-color: tan;
+}
+
+#map-itself, #directions{
+  /* width: 100%; */
+  height: 300px;
+}
+
+ol{
+  color: tan;
+}
+
+.clicker:hover {
+  text-decoration: underline;
+  /* border: 1px solid #000; */
+}
+
+.reviewBeer {
+  border: 1px solid #fff;
+}
+
+.reviewBeer:hover {
+  text-decoration: underline;
+}
+
+#directions {
+  overflow: scroll;
+}
