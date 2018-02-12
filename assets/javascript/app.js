@@ -156,10 +156,6 @@ function breweryCall() {
         // console.log(breweriesSortedByDistance);
 
         for (var i = 0; i < response.data.length; i++) {
-<<<<<<< HEAD
-            var tempBeerID = response.data[i].brewery.id;
-            beerMappingUnfiltered[tempBeerID] = [];
-=======
             var breweryId = response.data[i].brewery.id;
             beerMappingUnfiltered[breweryId] = [];
 
@@ -170,7 +166,6 @@ function breweryCall() {
                 breweryinfo[breweryId]['name'] = response.data[i].location.longitude;
                 breweryinfo[breweryId]['icon'] = response.data[i].location.longitude;
             */
->>>>>>> fec2d4547e9e7c164814e6cfe31e516037301645
         }
         console.log(beerMapping);
     });
