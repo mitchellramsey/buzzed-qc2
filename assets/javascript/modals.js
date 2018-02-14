@@ -7,10 +7,25 @@
         messagingSenderId: "51574204769"
         };
     firebase.initializeApp(config);
+    var database = firebase.database();
+    var beerName = "";
+    var beerRating = "";
+    var beerReview = "";
     
     $(document).on('click',".reviewBeer",function(){
         $('#myModal').modal('show');
-        $("#reviewThisBeer").text($(this).beerName);
+        $("#reviewThisBeer").text($(this).attr("data-id"));
+        database.ref($(this).attr("data-id")).on("child_added", function(snapshot) {
+            var beerInfo = snapshot.val();
+            var mrReview = beerInfo.dbbeerRating;
+            var mrComment = beerInfo.dbbeerReview;
+
+            $("#mostRecentReview").text(mrReview);
+            $("#mostRecentComment").text(mrComment);
+        }) 
+
+       
+
     });
 
     var database = firebase.database();
@@ -19,22 +34,22 @@
     var beerReview = "";
 
     $(document).on("click","#modalSubmit", function() {
+        $("#reviewForm").submit(function() {
+            event.preventDefault();
 
-        event.preventDefault();
+            beerName = $("#reviewThisBeer").text();
+            beerRating = $("#user-rating").val().trim();
+            beerReview = $("#user-review").val().trim();
 
-        beerName = $("#reviewThisBeer").text();
-        beerRating = $("#user-rating").val().trim();
-        beerReview = $("#user-review").val().trim();
 
-        beerRating.val("");
-        beerReview.val("");
-
-        database.ref().push ({
-            dbbeerName: beerName,
-            dbbeerRating: beerRating,
-            dbbeerReview: beerReview
+    
+            database.ref(beerName).push ({
+                dbbeerName: beerName,
+                dbbeerRating: beerRating,
+                dbbeerReview: beerReview
+            });
+            $('#myModal').modal('hide');
         });
-        $("myModal").modal('hide');
     });
 
     
